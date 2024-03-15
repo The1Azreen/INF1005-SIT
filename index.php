@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>World of Pets</title>
+    <title>CircuitCart</title>
     <?php
     // Include head.inc.php for the <head> section
     include "inc/head.inc.php";
