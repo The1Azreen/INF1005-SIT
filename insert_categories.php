@@ -26,8 +26,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve category title from the form
     $cat_title = $_POST['cat_title'];
 
+    // Get the last inserted category ID
+    $last_category_id_query = "SELECT MAX(category_id) AS max_id FROM ShopCategoryPrototypeTable";
+    $result = $conn->query($last_category_id_query);
+    $row = $result->fetch_assoc();
+    $last_category_id = $row['max_id'];
+    $new_category_id = $last_category_id + 1;
+
     // Prepare SQL statement to insert category into the database
-    $sql = "INSERT INTO ShopCategoryPrototypeTable (category_title) VALUES ('$cat_title')";
+    $sql = "INSERT INTO ShopCategoryPrototypeTable (category_id, category_title) VALUES ('$new_category_id', '$cat_title')";
 
     if ($conn->query($sql) === TRUE) {
         // Insert successful
