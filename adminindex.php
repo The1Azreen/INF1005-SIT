@@ -9,23 +9,7 @@
     ?>
 </head>
 <body>
-<?php
-// Include header.inc.php for the header section
-include "inc/header.inc.php";
-?>
 
-<?php
-// Include nav.inc.php for the navigation menu
-include "inc/nav.inc.php";
-?>
-
-
-
-
-<?php
-// Include footer.inc.php for the footer section
-include "inc/footer.inc.php";
-?>
     <!--first child -->
     <div class = "container-fluid">
         <nav class = "navbar navbar-expand-lg navbar-light bg-info">
@@ -49,7 +33,7 @@ include "inc/footer.inc.php";
     <div class = "row">
             <div class="col-md-12 bg-secondary p-1">
                 <div class="p-5">
-                    <a href="#"><img src="../images/test.jpg d-flex align-items-center"
+                    <a href="#"><img src="images/logo.jpg d-flex align-items-center"
                     alt="" class="admin_image"></a>
                     <p class="text-light text-center">Admin Name</p>
                 </div>
@@ -79,5 +63,10 @@ include "inc/footer.inc.php";
         }
          ?> 
     </div>
-    
 
+    <?php
+    // Include footer.inc.php for the footer section
+    include "inc/footer.inc.php";
+    ?>
+</body>
+</html>
