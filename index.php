@@ -46,7 +46,7 @@ $sql_brand = "SELECT brand_title FROM ShopBrandPrototypeTable";
 $result_brand = $conn->query($sql_brand);
 
 // Fetching category_id from the table
-$sql_category = "SELECT category_id FROM ShopCategoryPrototypeTable";
+$sql_category = "SELECT category_title FROM ShopCategoryPrototypeTable";
 $result_category = $conn->query($sql_category);
 
 // Close the database connection
@@ -124,7 +124,7 @@ $conn->close();
             // Output data of each row
             while($row = $result_category->fetch_assoc()) {
                 echo '<li class="nav-item bg-info">';
-                echo '<a href="#" class="nav-link" style="color: #fff;">' . $row["category_id"] . '</a>';
+                echo '<a href="#" class="nav-link" style="color: #fff;">' . $row["category_title"] . '</a>';
                 echo '</li>';
             }
         } else {

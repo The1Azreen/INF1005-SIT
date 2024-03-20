@@ -33,12 +33,11 @@
     <div class = "row">
             <div class="col-md-12 bg-secondary p-1">
                 <div class="p-5">
-                    <a href="#"><img src="images/logo.jpg d-flex align-items-center"
-                    alt="" class="admin_image"></a>
+                <img src="images/logo.jpg" alt="Logo" height="50em">
                     <p class="text-light text-center">Admin Name</p>
                 </div>
                 <div class="button text-center">
-                    <button><a href="" class="nav-link text-light bg-info my-1">Insert Products</a></button>
+                    <button><a href="insert_product.php" class="nav-link text-light bg-info my-1">Insert Products</a></button>
                     <button><a href="" class="nav-link text-light bg-info my-1">View Products</a></button>
                     <button><a href="adminindex.php?insert_category" class="nav-link text-light bg-info my-1">Insert Categories</a></button>
                     <button><a href="" class="nav-link text-light bg-info my-1">View Categories</a></button>
@@ -60,6 +59,9 @@
         }
         if(isset($_GET['insert_brand'])){
             include('insert_brands.php');
+        }
+        if(isset($_GET['insert_product'])){
+            include('insert_product.php');
         }
          ?> 
     </div>
