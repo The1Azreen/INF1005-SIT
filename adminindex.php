@@ -10,7 +10,7 @@
 </head>
 <body>
 
-    <!--first child -->
+    <!--first child
     <div class = "container-fluid">
         <nav class = "navbar navbar-expand-lg navbar-light bg-info">
            <div class = "container-fluid">
@@ -24,7 +24,7 @@
                 </nav>
             </div>
         </nav>
-    </div>
+    </div>-->
     <!--second child -->
     <div class = "bg-light">
             <h3 class="text-center p-2">Manage Detail</h3>
