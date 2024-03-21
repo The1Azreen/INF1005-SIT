@@ -1,41 +1,32 @@
-
-
 .sectionheader {
-    text-decoration: underline;
+  text-decoration: underline;
 }
-
-article img {
-    border: double black;
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5em;
+  background-color: #f5f5f5; /* Updated color */
+  border-bottom: solid;
 }
-
-figure {
-    display: inline-block;
-}
-
-figcaption {
-    color: gray;
-    text-align: center;
-    font-style: italic;
-}
-
 footer {
-    border-top: solid;
-    padding: 0.5em;
-    text-align: center;
+  border-top: solid;
+  padding: 0.5em;
+  text-align: center;
+}
+body {
+  background-color: #f5f5f5; /* Replace with your desired color */
 }
 
-.popupImg_class {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
-    background-color: rgb(0, 0, 0);
-    padding: 20px;
-    border: 1px solid #ccc;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+/* Login User Icon */
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined", sans-serif;
+  font-size: 50px; /* Adjust the font size as needed */
 }
 
-.img-thumbnail:hover {
-    cursor: pointer;
+#carouselBig .carousel-item img {
+  width: 970px;
+  height: 300px; /* Update the height value as per your requirement */
+  object-fit: cover;
 }
+
