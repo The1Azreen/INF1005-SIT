@@ -1,41 +1,16 @@
-
-
-.sectionheader {
-    text-decoration: underline;
-}
-
-article img {
-    border: double black;
-}
-
-figure {
-    display: inline-block;
-}
-
-figcaption {
-    color: gray;
-    text-align: center;
-    font-style: italic;
+div .shipping-address-container{
+  border: 1px solid #ccc; 
+  border-radius: 10px; 
+  margin-bottom: 20px; 
+  margin-top: 20px;
 }
 
 footer {
-    border-top: solid;
-    padding: 0.5em;
-    text-align: center;
+  text-align: center;
+  font-style: italic;
+  font-size: small;
+  border-top: 2px solid gray ;
+  padding-top: 20px;
+
 }
 
-.popupImg_class {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
-    background-color: rgb(0, 0, 0);
-    padding: 20px;
-    border: 1px solid #ccc;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.img-thumbnail:hover {
-    cursor: pointer;
-}

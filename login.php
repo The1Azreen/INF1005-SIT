@@ -1,32 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <?php include "inc/head.inc.php"; ?>
-</head>
-<body>
-
-<?php include "inc/nav.inc.php"; ?>
-
-<main class="container">
-    <h1>Login</h1>
-    <p>For New members, please go to the <a href="register.php">Sign Up page</a>.</p>
+    <title>User Login</title>
     <?php
-    
+    include "inc/head.inc.php";
     ?>
-    <form action="process_login.php" method="post">
-        <div class="mb-3">
-            <label for="email" class="form-label">Email:</label>
-            <input type="email" id="email" name="email" class="form-control" placeholder="Enter email" required maxlength="45">
-        </div>
-        <div class="mb-3">
-            <label for="pwd" class="form-label">Password:</label>
-            <input type="password" id="pwd" name="pwd" class="form-control" placeholder="Enter password" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Login</button>
-    </form>
-</main>
+</head>
 
-<?php include_once "inc/footer.inc.php"; ?> <!-- Include your footer file -->
+<body>
+    <?php
+        include "inc/nav.inc.php";
+    ?>
+    <main class="container">
+            <h1>User Login</h1>
+            <p>
+                Existing user log in here. For new user, please go to the
+                <a href="register.php">user Registation page.</a>.
+            </p>
+            <form action="process_login.php" method="post">
 
-</body>
+                <div class="mb-3">
+                    <label class="form-label" maxlength="45" for="email">Email:</label>
+                    <input required class="form-control" type="email" id="email" name="email" placeholder="Enter email">
+                </div>
+                
+                <div class="mb-3">
+                    <label class="fo rm-label" for="pwd">Password:</label>
+                    <input required class="form-control" type="password" id="pwd" name="pwd" placeholder="Enter password">
+                </div>
+
+                <div class="mb-3">
+                <button class="btn btn-primary" type="submit">Submit</button>
+                </div>
+            </form>
+        </main>
+        <?php
+            include "inc/footer.inc.php";
+        ?>
+    </body>
 </html>
