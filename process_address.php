@@ -49,8 +49,7 @@ function updateAddress()
                 if (!$stmt->execute()) {
                     $errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
                     $success = false;
-                } 
-                else {
+                } else {
                     $success = true;
                 }
 
@@ -59,13 +58,12 @@ function updateAddress()
                 $stmt = $conn->prepare("INSERT INTO member_address (member_id, address, floor, unit, address_type)
                 VALUES (?, ?, ?, ?, ?)");
 
-                $stmt->bind_param("sssss",$_SESSION["memberid"] , $address, $floor, $unit, $address_type);
+                $stmt->bind_param("sssss", $_SESSION["memberid"], $address, $floor, $unit, $address_type);
 
                 if (!$stmt->execute()) {
                     $errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
                     $success = false;
-                }
-                else {
+                } else {
                     $success = true;
                 }
                 $stmt->close();
@@ -95,33 +93,34 @@ function updateAddress()
     <main class="container">
         <div>
             <?php
-            if ((empty ($_POST["address"])) && (empty ($_POST["floor"])) 
-            && (empty ($_POST["unit"])) && (empty ($_POST["address_type"]))){
+            if (
+                (empty ($_POST["address"])) && (empty ($_POST["floor"]))
+                && (empty ($_POST["unit"])) && (empty ($_POST["address_type"]))
+            ) {
                 $errorMsg = "Please fill in all fields.<br>";
                 $success = false;
-            }
-            else{
+            } else {
                 updateAddress();
-                if ($success){
-                ?>
-                <div style="padding: 20px; 
+                if ($success) {
+                    ?>
+                    <div style="padding: 20px; 
                 border-top: 2px solid #D3D3D3; 
                 margin-top: 10px; 
                 border-bottom: 2px solid #D3D3D3;
                 margin-bottom: 10px;">
-                    <h3><b>Your address has been updated</b></h3>
-                    <br>
-                    <?php 
-                        if ($_SESSION["current_page"] == "user_address.php"){  ?>
-                            <input onclick="window.location='user_profile.php'" class="btn btn-success" type="submit" value="Back">
+                        <h3><b>Your address has been updated</b></h3>
+                        <br>
+                        <?php
+                        if ($_SESSION["current_page"] == "user_address.php") { ?>
+
+                            <input onclick="window.location='user.php'" class="btn btn-success" type="submit" value="Back">
                         <?php } else { ?>
                             <input onclick="window.location='checkout.php'" class="btn btn-success" type="submit" value="Back">
                         <?php } ?>
-                    <br>
-                </div>
-                <?php
-                }
-                else {
+                        <br>
+                    </div>
+                    <?php
+                } else {
                     ?>
                     <div style="padding: 20px; 
                 border-top: 2px solid #D3D3D3; 
@@ -133,15 +132,15 @@ function updateAddress()
                         <p>
                             <?php echo $errorMsg; ?>
                         </p>
-                        <?php 
-                        if ($_SESSION["current_page"] == "user_address.php"){  ?>
-                             <input onclick="window.location='user_profile.php'" class="btn btn-danger" type="submit"
-                            value="Return to profile page" />
+                        <?php
+                        if ($_SESSION["current_page"] == "user_address.php") { ?>
+                            <input onclick="window.location='user.php'" class="btn btn-danger" type="submit"
+                                value="Return to profile page" />
                         <?php } else { ?>
                             <input onclick="window.location='checkout.php'" class="btn btn-danger" type="submit"
-                            value="Return to checkout page" />
+                                value="Return to checkout page" />
                         <?php } ?>
-                       
+
                     </div>
                     <?php
                 }

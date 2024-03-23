@@ -1,5 +1,4 @@
 <?php
-
 /*
  * Helper function that checks input for malicious or unwanted content.
  */
@@ -107,11 +106,8 @@ function saveMemberToDB()
             }
             if ($mailsuccess && $passsuccess) {
                 ?>
-                <div style="padding: 20px; 
-                border-top: 2px solid #D3D3D3; 
-                margin-top: 10px; 
-                border-bottom: 2px solid #D3D3D3;
-                margin-bottom: 10px;">
+                <div
+                    style="padding: 20px; border-top: 2px solid #D3D3D3; margin-top: 10px; border-bottom: 2px solid #D3D3D3; margin-bottom: 10px;">
                     <h3><b>Your registration is successful!</b></h3>
                     <h4>Thank you for signing up,
                         <?php echo $_POST["fname"] . " " . $_POST["lname"]; ?>
@@ -123,11 +119,8 @@ function saveMemberToDB()
 
             } else {
                 ?>
-                <div style="padding: 20px; 
-                border-top: 2px solid #D3D3D3; 
-                margin-top: 10px; 
-                border-bottom: 2px solid #D3D3D3;
-                margin-bottom: 10px;">
+                <div
+                    style="padding: 20px; border-top: 2px solid #D3D3D3; margin-top: 10px; border-bottom: 2px solid #D3D3D3; margin-bottom: 10px;">
                     <h3><b>Oops!</b></h3>
                     <h4><b>The following errors were detected:</b></h4>
                     <p>

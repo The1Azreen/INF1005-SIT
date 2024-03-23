@@ -34,6 +34,7 @@ function authenticateUser()
             $errorMsg = "Connection failed: " . $conn->connect_error;
             $success = false;
         } else {
+
             // Prepare the statement:
             $stmt = $conn->prepare("SELECT * FROM members WHERE email=?");
             // Bind & execute the query statement:
@@ -93,24 +94,25 @@ function authenticateUser()
                 $email = sanitize_input($_POST["email"]);
                 // Additional check to make sure e-mail address is well-formed.
                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                    $mailerrorMsg .= "Invalid email format.";
+                    $mailerrorMsg = "Invalid email format.<br>";
                     $mailsuccess = false;
                 }
             }
             if (empty ($_POST["pwd"])) {
-                $passerrorMsg .= "Passwords is required.<br>";
+                $passerrorMsg = "Passwords is required.<br>";
                 $passsuccess = false;
             }
 
-            authenticateUser();
+            if ($mailsuccess && $passsuccess) {
+                authenticateUser();
+            } else {
+                $success = false;
+            }
 
-            if ($mailsuccess && $passsuccess&& $success) {
+            if ($success) {
                 ?>
-                <div style="padding: 20px; 
-                border-top: 2px solid #D3D3D3; 
-                margin-top: 10px; 
-                border-bottom: 2px solid #D3D3D3;
-                margin-bottom: 10px;">
+                <div
+                    style="padding: 20px; border-top: 2px solid #D3D3D3; margin-top: 10px; border-bottom: 2px solid #D3D3D3; margin-bottom: 10px;">
                     <h3><b>Login successful!</b></h3>
                     <h4>Welcome back,
                         <?php echo $fname . " " . $lname; ?>
@@ -119,18 +121,15 @@ function authenticateUser()
                         value="Return to Home">
                 </div>
 
-                <?php 
-                    $_SESSION['user'] = $fname; 
-                    $_SESSION['memberid'] = $memberid;
+                <?php
+                $_SESSION['user'] = $fname;
+                $_SESSION['memberid'] = $memberid;
                 ?> <!-- Set Session Username and ID -->
                 <?php
             } else {
                 ?>
-                <div style="padding: 20px; 
-                border-top: 2px solid #D3D3D3; 
-                margin-top: 10px; 
-                border-bottom: 2px solid #D3D3D3;
-                margin-bottom: 10px;">
+                <div
+                    style="padding: 20px; border-top: 2px solid #D3D3D3; margin-top: 10px; border-bottom: 2px solid #D3D3D3; margin-bottom: 10px;">
                     <h3><b>Oops!</b></h3>
                     <h4><b>The following errors were detected:</b></h4>
                     <p>

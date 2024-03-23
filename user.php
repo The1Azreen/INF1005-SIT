@@ -36,8 +36,7 @@ function getMemberAddress()
                 $floor = $row["floor"];
                 $unit = $row["unit"];
                 $address_type = $row["address_type"];
-            }
-            else {
+            } else {
                 $address = "No Address Saved.";
             }
             $conn->close();
@@ -80,7 +79,7 @@ function getMemberOrder()
                 echo "<ul>";
                 while ($row = $result->fetch_assoc()) {
                     echo "<li>Order ID: " . $row["order_id"] . '&nbsp;&nbsp;&nbsp; Total Items: ' . $row["total_qty"] . '&nbsp;&nbsp;&nbsp; Status: ' . $row["order_status"] . "</li>";
-                    
+
                 }
                 echo "</ul>";
             } else {
@@ -98,41 +97,42 @@ function getMemberOrder()
 <head>
     <title>User Profile</title>
     <?php
-        include "inc/head.inc.php";
+    include "inc/head.inc.php";
     ?>
 </head>
 
 <body>
     <?php
-        include "inc/loginNav.inc.php";
+    include "inc/loginNav.inc.php";
     ?>
     <br>
-     <main class="container">
+    <main class="container">
         <div class="row">
             <div class="col-md-6">
                 <h2>User Profile</h2>
                 <table class="table">
                     <tbody>
                         <tr>
-                            <h5><b><?php echo $_SESSION["user"]; ?></b></h5>
+                            <h5><b>
+                                    <?php echo $_SESSION["user"]; ?>
+                                </b></h5>
                         </tr>
                         <tr>
                             <th>
-                                Address: 
+                                Address:
                             </th>
-                           
+
                         </tr>
                         <tr>
                             <td>
-                            <?php echo $address; ?>,
-                            <?php echo $floor; ?>,
-                            <?php echo $unit; ?>
+                                <?php echo $address; ?>,
+                                <?php echo $floor; ?>,
+                                <?php echo $unit; ?>
                             </td>
                         </tr>
                     </tbody>
                 </table>
                 <a href="user_address.php" class="btn btn-primary">Update Address</a>
-                <br><br>
                 <a href="user_password.php" class="btn btn-primary">Change Password</a>
                 <br><br>
             </div>

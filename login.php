@@ -33,6 +33,7 @@
                 <div class="mb-3">
                 <button class="btn btn-primary" type="submit">Submit</button>
                 </div>
+                <br>
             </form>
         </main>
         <?php

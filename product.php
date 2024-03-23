@@ -27,7 +27,7 @@ function getProducts()
             $result = $stmt->get_result();
             if ($result->num_rows > 0) {
                 echo '<table>';
-                echo '<tr><th>Product Name</th><th>Description</th><th>Price</th><th></th></tr>';
+                echo '<tr><th>Name</th><th>Description</th><th>Price</th><th></th></tr>';
                 while ($row = $result->fetch_assoc()) {
                     echo '<tr>';
                     echo '<td>' . $row['product_name'] . '</td>';
@@ -36,8 +36,6 @@ function getProducts()
                     echo '<td>';
                     if (isset ($_SESSION["user"]) && $_SESSION["user"] != "") {
                         echo '<button class="btn btn-primary" style="text-align: center;" onclick="addToCart(' . $row['product_id'] . ', \'' . $row['product_name'] . '\', ' . $row['price'] . ')">Add to Cart</button>';
-                    } else {
-                        echo 'Please login to purchase items.';
                     }
                     echo '</td>';
                     echo '</tr>';
@@ -76,11 +74,10 @@ function getProducts()
     <main class="container">
 
         <div class="row">
-            <h2>Products</h2>
-            <?php getProducts(); ?>
-
-
+            <h2 class="product-title">Products</h2>
         </div>
+        <div>
+            <?php getProducts(); ?>
         </div>
     </main>
 
@@ -100,6 +97,8 @@ function getProducts()
                     alert(data); // Show response from server
                     location.reload(); // Reload the page to show updated cart
                 })
+
+
                 .catch(error => {
                     console.error('Error:', error);
                 });

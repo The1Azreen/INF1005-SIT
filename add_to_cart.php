@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['cart'])) {
+if (!isset ($_SESSION['cart'])) {
     $_SESSION['cart'] = array();
 }
 
 // Get product details from POST request
-if (isset($_POST['product_id'], $_POST['product_name'], $_POST['price'])) {
+if (isset ($_POST['product_id'], $_POST['product_name'], $_POST['price'])) {
     $productId = $_POST['product_id'];
     $productName = $_POST['product_name'];
     $price = $_POST['price'];
@@ -27,7 +27,7 @@ if (isset($_POST['product_id'], $_POST['product_name'], $_POST['price'])) {
         );
     }
 
-    echo 'Product added to cart';
+    echo $productName . ' added to cart';
 } else {
     echo 'Error: Invalid request';
 }

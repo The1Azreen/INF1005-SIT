@@ -87,11 +87,12 @@ getMemberAddress();
                                         </td>
                                         <td>
                                             <?php echo $item['quantity'];
-                                             ?>
-                                            
+                                            ?>
+
                                         </td>
                                         <td>
-                                            $<?php echo $item['price'];
+                                            $
+                                            <?php echo $item['price'];
                                             ?>
                                         </td>
                                     </tr>
@@ -101,7 +102,7 @@ getMemberAddress();
                         <!-- Display total price -->
                         <br>
                         <p>Total:
-                            <?php echo '$' . number_format($totalPrice, 2); 
+                            <?php echo '$' . number_format($totalPrice, 2);
                             ?>
                         </p>
                         <br>

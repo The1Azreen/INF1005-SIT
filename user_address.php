@@ -56,26 +56,30 @@ getMemberAddress();
     include "inc/loginNav.inc.php";
     ?>
     <br>
-     <main class="container">
+    <main class="container">
         <div class="row">
             <div class="col-md-6">
                 <h2>Address</h2>
                 <form action="process_address.php" method="POST">
                     <div class="form-group">
                         <label for="address">Address:</label>
-                        <input required type="text" class="form-control" id="address" name="address" value="<?php echo $address; ?>">
+                        <input required type="text" class="form-control" id="address" name="address"
+                            value="<?php echo $address; ?>">
                     </div>
                     <div class="form-group">
                         <label for="floor">Floor:</label>
-                        <input required type="text" class="form-control" id="floor" name="floor" value="<?php echo $floor; ?>">
+                        <input required type="text" class="form-control" id="floor" name="floor"
+                            value="<?php echo $floor; ?>">
                     </div>
                     <div class="form-group">
                         <label for="unit">Unit:</label>
-                        <input required type="text" class="form-control" id="unit" name="unit" value="<?php echo $unit; ?>">
+                        <input required type="text" class="form-control" id="unit" name="unit"
+                            value="<?php echo $unit; ?>">
                     </div>
                     <div class="form-group">
                         <label for="address_type">Type:</label>
-                        <input required type="text" class="form-control" id="address_type" name="address_type" value="<?php echo $address_type; ?>">
+                        <input required type="text" class="form-control" id="address_type" name="address_type"
+                            value="<?php echo $address_type; ?>">
                     </div>
                     <br>
                     <button type="submit" class="btn btn-primary">Update Address</button>
