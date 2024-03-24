@@ -1,8 +1,10 @@
 /* Yolanda's CSS */
 .container>h1,
-.col-md-9>h2 {
+.col-md-9>h2,
+section.aboutUS{
   margin-top: 20px;
 }
+
 
 .shipping-address-container{
   padding:20px;

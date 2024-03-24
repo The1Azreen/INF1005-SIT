@@ -20,7 +20,7 @@ session_start(); // Start the session
     }
     ?>
     <main class="container">
-    <section>
+    <section class="aboutUS">
             <h2>Our Product Range</h2>
             <p>From state-of-the-art smartphones to sleek laptops, smart home devices to powerful gaming consoles, and everything in between, Circuit Cart has it all. Whether you're a tech enthusiast looking for the latest releases or a casual user in need of everyday electronics, our extensive product range ensures that there's something for everyone.</p>
         </section>

@@ -1,4 +1,5 @@
-<div id="mySidenav" class="sidenav">
+
+<aside id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <div class="row">
         <div class="myCart col-md-12">
@@ -55,4 +56,4 @@
             <?php } ?>
         </div>
     </div>
-</div>
+</aside>

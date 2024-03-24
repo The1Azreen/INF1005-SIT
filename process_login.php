@@ -15,7 +15,7 @@ function sanitize_input($data)
  */
 function authenticateUser()
 {
-    global $memberid, $fname, $lname, $email, $pwd_hashed, $errorMsg, $success;
+    global $memberid, $fname, $lname, $email,$uType, $pwd_hashed, $errorMsg, $success;
     $success = true;
     // Create database connection.
     $config = parse_ini_file('/var/www/private/db-config.ini');
@@ -48,6 +48,8 @@ function authenticateUser()
                 $memberid = $row["member_id"];
                 $fname = $row["fname"];
                 $lname = $row["lname"];
+                $uType = $row["acc_type"];
+
                 $pwd_hashed = $row["password"];
                 // Check if the password matches:
                 if (!password_verify($_POST["pwd"], $pwd_hashed)) {
@@ -117,16 +119,21 @@ function authenticateUser()
                     <h4>Welcome back,
                         <?php echo $fname . " " . $lname; ?>
                     </h4>
-                    <input onclick="window.location='index.php'" class="btn btn-success" type="submit"
+                    <?php if ($uType == 'user'){ ?>
+                        <input onclick="window.location='index.php'" class="btn btn-success" type="submit"
                         value="Return to Home">
+                    <?php } else {?>
+                        <!-- display admin main page instead, change # with admin php -->
+                        <input onclick="window.location='#'" class="btn btn-success" type="submit"
+                            value="Return to Home">
+                    <?php } ?>
                 </div>
-
+                    <?php 
+                        $_SESSION['user'] = $fname;
+                        $_SESSION['memberid'] = $memberid;
+                    ?>
                 <?php
-                $_SESSION['user'] = $fname;
-                $_SESSION['memberid'] = $memberid;
-                ?> <!-- Set Session Username and ID -->
-                <?php
-            } else {
+                } else {
                 ?>
                 <div
                     style="padding: 20px; border-top: 2px solid #D3D3D3; margin-top: 10px; border-bottom: 2px solid #D3D3D3; margin-bottom: 10px;">
