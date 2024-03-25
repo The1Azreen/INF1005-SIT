@@ -1,24 +1,29 @@
-// Instantiate the Bootstrap carousel
-$(".multi-item-carousel").carousel({
-  interval: false,
-});
+const stars = document.querySelectorAll(".star-rating i");
 
-// for every slide in carousel, copy the next slide's item in the slide.
-// Do the same for the next, next item.
-$(".multi-item-carousel .item").each(function () {
-  var next = $(this).next();
-  if (!next.length) {
-    next = $(this).siblings(":first");
-  }
-  next.children(":first-child").clone().appendTo($(this));
+stars.forEach((star, index) => {
+  star.addEventListener("mouseover", () => {
+    stars.forEach((el) => el.classList.remove("active"));
+    for (let i = 0; i <= index; i++) {
+      stars[i].classList.add("active");
+    }
+  });
 
-  if (next.next().length > 0) {
-    next.next().children(":first-child").clone().appendTo($(this));
-  } else {
-    $(this)
-      .siblings(":first")
-      .children(":first-child")
-      .clone()
-      .appendTo($(this));
-  }
+  star.addEventListener("click", () => {
+    for (let i = 0; i <= index; i++) {
+      stars[i].classList.add("active");
+    }
+
+    for (let i = index + 1; i < stars.length; i++) {
+      stars[i].classList.remove("active");
+    }
+
+    // Here you can add the code to submit the rating to the server
+    const rating = document.querySelector(".rating-value");
+    rating.value = index + 1;
+    submitForm();
+  });
+
+  star.addEventListener("mouseout", () => {
+    stars.forEach((el) => el.classList.remove("active"));
+  });
 });
