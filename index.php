@@ -8,100 +8,140 @@
     ?>
 </head>
 <body>
-
 <?php
 // Include header.inc.php for the header section
 include "inc/header.inc.php";
 ?>
 
 <?php
-// Include nav.inc.php for the navigation menu
+// Include nav.inc.php for the header section
 include "inc/nav.inc.php";
 ?>
 
-<main class="container">
-    <section id="dogs">
-        <h2 class="sectionheader">All About Dogs!</h2>
+
+<?php
+session_start();
+
+// Include database configuration
+$config = parse_ini_file('/var/www/private/db-config.ini');
+if (!$config) {
+    die("Failed to read database config file.");
+}
+
+// Establish connection to the database
+$servername = $config['servername'];
+$username = $config['username'];
+$password = $config['password'];
+$dbname = $config['dbname'];
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Fetching brand_title from the table
+$sql_brand = "SELECT brand_title FROM ShopBrandPrototypeTable";
+$result_brand = $conn->query($sql_brand);
+
+// Fetching category_id from the table
+$sql_category = "SELECT category_title FROM ShopCategoryPrototypeTable";
+$result_category = $conn->query($sql_category);
+
+// Close the database connection
+$conn->close();
+?>
+
+
+
+
+<div class="bg-light">
+    <h3 class="text-center">CircuitCart</h3>
+    <p class="text-center">Communication is at the heart of e-commerce and community</p>
+</div>
+
+<div class="row">
+    <div class="col-md-10">
         <div class="row">
-            <article class="col-sm">
-                <h3>Poodles</h3>
-                <figure>
-                    <img class="img-thumbnail" src="images/poodle_small.jpg"
-                         alt="Poodle" title="View larger image..."/>
-                    <figcaption>Standard Poodle</figcaption>
-                </figure>
-                <p>
-                    Poodles are a group of formal dog breeds, the Standard
-                    Poodle, Miniature Poodle and Toy Poodle. The height of the poodle is typically between 18 and 24 inches,
-                    although being over 15 inches specifically sets the Standard Poodle apart from Miniature Poodle and Toy Poodle.
-                </p>
-            </article>
-
-            <article class="col-sm">
-                <h3>Chihuahua</h3>
-                <figure>
-                    <img class="img-thumbnail" src="images/chihuahua_small.jpg"
-                         alt="Chihuahua" title="View larger image..."/>
-
-                    <figcaption>Chihuahua</figcaption>
-                </figure>
-                <p>
-                    The Chihuahua is the smallest breed of dog, and is named
-                    after the Mexican state of Chihuahua.There are two variables of Chihuahua - The Smooth Coat (smooth-haired)
-                    and the Long Coat(long-haried). Both the Smooth and Long Coat have their special attractions and are equally
-                    easy keep clean and well-groomed.
-                </p>
-            </article>
+            <div class="col-md-4 mb-2">
+                <div class="card" style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-info">Add to Cart</a>
+                        <a href="#" class="btn btn-secondary">View More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-2">
+                <div class="card" style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-info">Add to Cart</a>
+                        <a href="#" class="btn btn-secondary">View More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-2">
+                <div class="card" style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        <a href="#" class="btn btn-info">Add to Cart</a>
+                        <a href="#" class="btn btn-secondary">View More</a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
+    </div>
+    <div class="col-md-2 bg-secondary">
+    <ul class="navbar-nav me-auto">
+        <h1 style="font-size: 1.5rem; margin-bottom: 20px;">Delivery Brand</h1>
+        <?php
+        if ($result_brand->num_rows > 0) {
+            // Output data of each row
+            while($row = $result_brand->fetch_assoc()) {
+                echo '<li class="nav-item bg-info">';
+                echo '<a href="#" class="nav-link" style="color: #fff;">' . $row["brand_title"] . '</a>';
+                echo '</li>';
+            }
+        } else {
+            echo '<li class="nav-item bg-info">';
+            echo '<a href="#" class="nav-link" style="color: #fff;">No brands available</a>';
+            echo '</li>';
+        }
+        ?>
+    </ul>
+    <h1 style="font-size: 1.5rem; margin-bottom: 20px;">Category</h1>
+    <ul class="navbar-nav me-auto">
+        <?php
+        if ($result_category->num_rows > 0) {
+            // Output data of each row
+            while($row = $result_category->fetch_assoc()) {
+                echo '<li class="nav-item bg-info">';
+                echo '<a href="#" class="nav-link" style="color: #fff;">' . $row["category_title"] . '</a>';
+                echo '</li>';
+            }
+        } else {
+            echo '<li class="nav-item bg-info">';
+            echo '<a href="#" class="nav-link" style="color: #fff;">No categories available</a>';
+            echo '</li>';
+        }
+        ?>
+    </ul>
+</div>
 
-    <section id="cats">
-        <h2 class="sectionheader">All About Cats!</h2>
-        <div class="row">
-            <article class="col-sm">
-                <h3>Tabby</h3>
-                <figure>
-                    <img class="img-thumbnail" src="images/tabby_small.jpg"
-                         alt="Tabby" title="View larger image..."/>
-                    <figcaption>Tabby Cat</figcaption>
-                </figure>
-                <p>
-                    “A tabby is any domestic cat (Felis catus) with a distinctive ‘M’ shaped marking on its forehead,
-                    stripes by its eyes and across its cheeks, along its back, and around its legs and tail, and (differing by tabby type),
-                    characteristic striped, dotted, lined, flecked, banded or swirled patterns on the body-neck, shoulders, sides,
-                    flanks, chest and abdomen. ‘Tabby’ is not a breed of cat but a coat type seen in almost all genetic lines of domestic cats,
-                    regardless of breed or pedigree status.
-                </p>
-            </article>
 
-            <article class="col-sm">
-                <h3>Calico</h3>
-                <figure>
-                    <img class="img-thumbnail" src="images/calico_small.jpg"
-                         alt="Calico" title="View larger image..."/>
-                    <figcaption>Calico Cat</figcaption>
-                </figure>
-                <p>
-                    A calico cat is a domestic cat of any breed with a tri-color coat. The calico cat on its forehead,
-                    stripes by its eyes and across its cheeks, along its back, and around its legs and tail, and
-                    (differing by tabby type), characteristic striped, dotted, lined, flecked, banded or
-                    swirled patterns on the body-neck, shoulders, sides, flanks, chest and abdomen.
 
-                    The most commonly thought of as being typically 25% to 75% white with large orange and black patches
-                    (or sometimes cream and grey patches); however, the calico cat can have any three colors in its pattern.
-                    They are almost exclusively female except under rare genetic conditions. Calico is not to be confused with a
-                    tortoiseshell, which has a mostly mottled coat of black/orange or grey/cream with relatively few to no
-                    white markings.
-                </p>
-            </article>
-        </div>
-    </section>
-</main>
+
+
 
 <?php
 // Include footer.inc.php for the footer section
 include "inc/footer.inc.php";
 ?>
-
-</body>
-</html>
