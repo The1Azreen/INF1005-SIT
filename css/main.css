@@ -1,13 +1,13 @@
 /* Yolanda's CSS */
 .container>h1,
 .col-md-9>h2,
-section.aboutUS{
+section.aboutUS {
   margin-top: 20px;
 }
 
 
-.shipping-address-container{
-  padding:20px;
+.shipping-address-container {
+  padding: 20px;
 }
 
 #mySidenav {
@@ -20,10 +20,10 @@ section.aboutUS{
   border-radius: 20px 0px 0px 20px
 }
 
-div.message-page{
-  padding: 20px; 
-  border-top: 2px solid #D3D3D3; 
-  margin-top: 10px; 
+div.message-page {
+  padding: 20px;
+  border-top: 2px solid #D3D3D3;
+  margin-top: 10px;
   border-bottom: 2px solid #D3D3D3;
   margin-bottom: 10px;
 }
@@ -257,26 +257,32 @@ td {
 }
 
 section.contact-form {
-  max-width: 500px; /* Adjust the max-width as needed */
-  margin: 0 auto; /* Center the form horizontally */
+  max-width: 500px;
+  /* Adjust the max-width as needed */
+  margin: 0 auto;
+  /* Center the form horizontally */
 }
 
 section.contact-form label,
 section.contact-form input,
 section.contact-form textarea {
-  width: 100%; /* Make inputs and textarea full width */
-  box-sizing: border-box; /* Include padding and border in the width */
-  margin-bottom: 10px; /* Add some space between form elements */
+  width: 100%;
+  /* Make inputs and textarea full width */
+  box-sizing: border-box;
+  /* Include padding and border in the width */
+  margin-bottom: 10px;
+  /* Add some space between form elements */
 }
 
 section.contact-form textarea {
-  resize: vertical; /* Allow vertical resizing of textarea */
+  resize: vertical;
+  /* Allow vertical resizing of textarea */
 }
 
 section.contact-form button {
-  width: 100%; /* Make the button full width */
+  width: 100%;
+  /* Make the button full width */
 }
-
 
 
 

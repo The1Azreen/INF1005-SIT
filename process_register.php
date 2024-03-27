@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Helper function that checks input for malicious or unwanted content.
  */
@@ -18,6 +19,7 @@ function saveMemberToDB()
     // Create database connection.
     $config = parse_ini_file('/var/www/private/db-config.ini');
     global $email, $fname, $lname, $pwd, $errorMsg, $success;
+    $success = true;
     $conn = new mysqli(
         $config['servername'],
         $config['username'],
@@ -40,17 +42,18 @@ function saveMemberToDB()
             $success = false;
         } else {
             // Prepare the statement:
-            $stmt = $conn->prepare("INSERT INTO members (fname, lname, email, password) 
-            VALUES (?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO members (fname, lname, email, password, acc_type) 
+            VALUES (?, ?, ?, ?, ?)");
             // Capture user input
             $fname = $_POST["fname"];
             $lname = $_POST["lname"];
             $pwd = $_POST["pwd"];
             // Hash the password
             $hashedPassword = password_hash($pwd, PASSWORD_DEFAULT);
+            $accType = 'false';
 
             // Bind & execute the query statement:
-            $stmt->bind_param("ssss", $fname, $lname, $email, $hashedPassword);
+            $stmt->bind_param("sssss", $fname, $lname, $email, $hashedPassword, $accType);
 
             if (!$stmt->execute()) {
                 $errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
@@ -84,7 +87,7 @@ function saveMemberToDB()
             $pwd = $passerrorMsg = "";
             $mailsuccess = true;
             $passsuccess = true;
-            if (empty ($_POST["email"])) {
+            if (empty($_POST["email"])) {
                 $mailerrorMsg = "Email is required.<br>";
                 $mailsuccess = false;
             } else {
@@ -95,7 +98,7 @@ function saveMemberToDB()
                     $mailsuccess = false;
                 }
             }
-            if (empty ($_POST["pwd"])) {
+            if (empty($_POST["pwd"])) {
                 $passerrorMsg = "Passwords is required.<br>";
                 $passsuccess = false;
             } else {
@@ -105,22 +108,46 @@ function saveMemberToDB()
                 }
             }
             if ($mailsuccess && $passsuccess) {
-                ?>
-                <div
-                    style="padding: 20px; border-top: 2px solid #D3D3D3; margin-top: 10px; border-bottom: 2px solid #D3D3D3; margin-bottom: 10px;">
-                    <h3><b>Your registration is successful!</b></h3>
-                    <h4>Thank you for signing up,
-                        <?php echo $_POST["fname"] . " " . $_POST["lname"]; ?>
-                    </h4>
-                    <input onclick="window.location='index.php'" class="btn btn-success" type="submit" value="Log-in">
-                </div>
-                <?php
                 saveMemberToDB();
+                if ($success) {
+                    ?>
+                    <div style="padding: 20px; 
+                    border-top: 2px solid #D3D3D3; 
+                    margin-top: 10px; 
+                    border-bottom: 2px solid #D3D3D3;
+                    margin-bottom: 10px;">
+                        <h3><b>Your registration is successful!</b></h3>
+                        <h4>Thank you for signing up,
+                            <?php echo $_POST["fname"] . " " . $_POST["lname"]; ?>
+                        </h4>
+                        <input onclick="window.location='index.php'" class="btn btn-success" type="submit" value="Log-in">
+                    </div>
+                    <?php
 
+                } else {
+                    ?>
+                    <div style="padding: 20px; 
+                    border-top: 2px solid #D3D3D3; 
+                    margin-top: 10px; 
+                    border-bottom: 2px solid #D3D3D3;
+                    margin-bottom: 10px;">
+                        <h3><b>Oops!</b></h3>
+                        <h4><b>The following errors were detected:</b></h4>
+                        <p>
+                            <?php echo $errorMsg; ?>
+                        </p>
+                        <input onclick="window.location='register.php'" class="btn btn-danger" type="submit"
+                            value="Return to Sign Up" />
+                    </div>
+                    <?php
+                }
             } else {
                 ?>
-                <div
-                    style="padding: 20px; border-top: 2px solid #D3D3D3; margin-top: 10px; border-bottom: 2px solid #D3D3D3; margin-bottom: 10px;">
+                <div style="padding: 20px; 
+                border-top: 2px solid #D3D3D3; 
+                margin-top: 10px; 
+                border-bottom: 2px solid #D3D3D3;
+                margin-bottom: 10px;">
                     <h3><b>Oops!</b></h3>
                     <h4><b>The following errors were detected:</b></h4>
                     <p>

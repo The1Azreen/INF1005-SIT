@@ -119,7 +119,7 @@ function authenticateUser()
                     <h4>Welcome back,
                         <?php echo $fname . " " . $lname; ?>
                     </h4>
-                    <?php if ($uType == 'user'){ ?>
+                    <?php if ($uType == 'false'){ ?>
                         <input onclick="window.location='index.php'" class="btn btn-success" type="submit"
                         value="Return to Home">
                     <?php } else {?>
