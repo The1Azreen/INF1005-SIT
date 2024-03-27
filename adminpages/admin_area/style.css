@@ -1,0 +1,11 @@
+/* for first top rectangle box */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.logo {
+    width: 7%;
+    height: 7%;
+}
