@@ -1,4 +1,5 @@
 <?php
+session_start(); 
 /*
  * Helper function that checks input for malicious or unwanted content.
  */
@@ -13,6 +14,7 @@ function sanitize_input($data)
 /*
  * Helper function to write the member data to the database.
  */
+
 function saveMemberToDB()
 {
     // Create database connection.
@@ -36,12 +38,12 @@ function saveMemberToDB()
         $stmt->execute();
         $result = $stmt->get_result();
         if ($result->num_rows > 0) {
-            $errorMsg = "Email already exist";
+            $errorMsg = "Email already exists";
             $success = false;
         } else {
             // Prepare the statement:
-            $stmt = $conn->prepare("INSERT INTO members (fname, lname, email, password) 
-            VALUES (?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO members (fname, lname, email, password, account_type) 
+            VALUES (?, ?, ?, ?, 'false')");
             // Capture user input
             $fname = $_POST["fname"];
             $lname = $_POST["lname"];
@@ -54,7 +56,12 @@ function saveMemberToDB()
 
             if (!$stmt->execute()) {
                 $errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+                echo "<script>alert('Failed');</script>";
                 $success = false;
+            } else {
+                $success = true; // Indicates successful execution
+                // JavaScript alert
+                echo "<script>alert('Registration successful!');</script>";
             }
 
             $stmt->close();
@@ -106,6 +113,7 @@ function saveMemberToDB()
             }
             if ($mailsuccess && $passsuccess) {
                 ?>
+                
                 <div
                     style="padding: 20px; border-top: 2px solid #D3D3D3; margin-top: 10px; border-bottom: 2px solid #D3D3D3; margin-bottom: 10px;">
                     <h3><b>Your registration is successful!</b></h3>
