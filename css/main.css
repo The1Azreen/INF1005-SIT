@@ -1,195 +1,322 @@
-main {
-    min-height: 80vh;
-    padding: 2rem 0;
+/* Yolanda's CSS */
+.container>h1,
+.col-md-9>h2,
+section.aboutUS{
+  margin-top: 20px;
+}
+
+
+.shipping-address-container{
+  padding:20px;
+}
+
+#mySidenav {
+  color: black;
+  border-style: solid none;
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 20px 0px 0px 20px
+}
+
+div.message-page{
+  padding: 20px; 
+  border-top: 2px solid #D3D3D3; 
+  margin-top: 10px; 
+  border-bottom: 2px solid #D3D3D3;
+  margin-bottom: 10px;
+}
+
+a.btn,
+button.btn {
+  width: 90%+10px;
+  font-size: 0.8em;
+  background: linear-gradient(231deg, #fafafa, rgba(19, 50, 133, 0.9), #e9e9e9);
+  background-size: 600% 600%;
+  height: 60px;
+
+  text-align: center;
+  vertical-align: middle;
+  line-height: 40px;
+
+  -webkit-animation: wave 15s ease infinite;
+  -moz-animation: wave 15s ease infinite;
+  animation: wave 15s ease infinite;
+
+}
+
+a.btn:hover,
+button.btn:hover {
+  -webkit-animation: bounce-top-hover .9s ease;
+  animation: bounce-top-hover .9s ease;
+}
+
+.btnRemove,
+.btnRemove:hover {
+  color: none;
+  border: none;
+  background: none;
+}
+
+.btnRemove>i {
+  align-items: center;
+  background-color: #FFE7E7;
+  background-position: 0 0;
+  border: 1px solid #FEE0E0;
+  border-radius: 11px;
+  box-sizing: border-box;
+  color: #D33A2C;
+  cursor: pointer;
+  display: flex;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 33.4929px;
+  list-style: outside url(https://www.smashingmagazine.com/images/bullet.svg) none;
+  padding: 2px 12px;
+  text-align: left;
+  text-decoration: none;
+  text-shadow: none;
+  text-underline-offset: 1px;
+  transition: border .2s ease-in-out, box-shadow .2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+
+}
+
+.btnRemove>i:active,
+.btnRemove>i:hover,
+.btnRemove>i:focus {
+  outline: 0;
+}
+
+.btnRemove>i:active:hover,
+.btnRemove>i:focus:hover,
+.btnRemove>i:focus {
+  background-color: #D33A2C;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
+  color: #FFFFFF;
+}
+
+.btnRemove>i:active {
+  background-color: #D33A2C;
+  box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
+  color: #FFFFFF;
+}
+
+.btnRemove>i:hover {
+  box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.24), 0 8px 10px 0 rgba(0, 0, 0, 0.19);
+  background-color: #FFE3E3;
+  border-color: #FAA4A4;
+}
+
+@-webkit-keyframes bounce-top-hover {
+
+  0%,
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
   }
-  
-  .sectionheader {
-    text-decoration: underline;
+
+  30%,
+  60% {
+    -webkit-transform: translateY(-6px);
+    transform: translateY(-6px);
   }
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5em;
-    background-color: #f5f5f5; /* Updated color */
-    border-bottom: solid;
+
+  45%,
+  75% {
+    -webkit-transform: translateY(-4px);
+    transform: translateY(-4px);
   }
-  footer {
-    padding: 0.5em;
-    text-align: center;
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    height: 2.5rem;
-    background-color: #f8f9fa;
-    border-top: 1px solid #e9ecef;
+}
+
+@keyframes bounce-top-hover {
+
+  0%,
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
   }
-  .push {
-    height: 100%; /* Fill the remaining space between the main content and the footer */
+
+  30%,
+  60% {
+    -webkit-transform: translateY(-6px);
+    transform: translateY(-6px);
   }
-  body {
-    background-color: #f5f5f5; /* Replace with your desired color */
+
+  45%,
+  75% {
+    -webkit-transform: translateY(-4px);
+    transform: translateY(-4px);
   }
-  
-  /* Login User Icon */
-  .material-symbols-outlined {
-    font-family: "Material Symbols Outlined", sans-serif;
-    font-size: 50px; /* Adjust the font size as needed */
+}
+
+@-webkit-keyframes wave {
+  0% {
+    background-position: 51% 0%
   }
-  
-  #carouselBig .carousel-item img {
-    width: 970px;
-    height: 300px; /* Update the height value as per your requirement */
-    object-fit: cover;
+
+  50% {
+    background-position: 50% 100%
   }
-  
-  /* Product Section */
-  #products {
-    margin-top: 50px;
+
+  100% {
+    background-position: 51% 0%
   }
-  
-  .product_img {
-    text-align: center;
+}
+
+@-moz-keyframes wave {
+  0% {
+    background-position: 51% 0%
   }
-  
-  .product_img img {
-    max-width: 100%;
-    height: auto;
+
+  50% {
+    background-position: 50% 100%
   }
-  
-  .product_content {
-    padding: 20px;
+
+  100% {
+    background-position: 51% 0%
   }
-  
-  .product_titled {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
+}
+
+@keyframes wave {
+  0% {
+    background-position: 51% 0%
   }
-  
-  .product_description {
-    font-size: 16px;
-    line-height: 1.5;
-    margin-bottom: 20px;
+
+  50% {
+    background-position: 50% 100%
   }
-  
-  .price {
-    margin-bottom: 20px;
+
+  100% {
+    background-position: 51% 0%
   }
-  
-  .normal_price {
-    font-size: 20px;
-    font-weight: bold;
+}
+
+.sidenav h2 {
+  font-style: italic;
+  text-decoration: underline;
+}
+
+.sidenav .myCart {
+  padding: 25px;
+}
+
+.sidenav th,
+td {
+  padding: 16px;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1000;
+  ;
+  top: 0;
+  right: 0;
+  background-color: #fafafa;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  /* color: #B2AD9A; */
+  color: #3385ff;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+  color: black;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {
+    padding-top: 15px;
   }
-  
-  .genre,
-  .release_date {
-    font-size: 16px;
-    margin-bottom: 10px;
-  }
-  
-  .btn_submit {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-  }
-  
-  /* Reviews Section */
-  #reviews {
-    margin-top: 50px;
-  }
-  
-  .card {
-    margin-bottom: 20px;
-  }
-  
-  .card-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  .card-text {
-    font-size: 16px;
-    margin-bottom: 10px;
-  }
-  
-  .text-muted {
-    font-size: 12px;
-  }
-  
-  /* Comment Section */
-  #comments {
-    margin-top: 50px;
-  }
-  
-  .form-group {
-    margin-bottom: 20px;
-  }
-  
-  textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    resize: vertical;
-  }
-  
-  #rating {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .btn_submit {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-  }
-  .star-rating {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
-  
-  .star-rating .d-block {
-    display: block;
-    cursor: pointer;
-  }
-  
-  .text-primary .bi {
-    color: #0d6efd; /* Bootstrap primary color */
-  }
-  
-  .text-secondary .bi {
-    color: #6c757d; /* Bootstrap secondary color */
-  }
-  .star-rating {
-    color: #ccc;
-  }
-  
-  .star-rating i.fas::before {
-    content: "\f005";
-  }
-  
-  .star-rating i.far::before {
-    content: "\f006";
-  }
-  
-  .star-rating i.active,
-  .star-rating i:hover {
-    color: #0d6efd;
-    cursor: pointer;
-  }
-  
+}
+
+h2 .product-title {
+  margin-bottom: 20px;
+}
+
+div .shipping-address-container {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+tr,
+td {
+  padding: 10px 15px;
+}
+
+section.contact-form {
+  max-width: 500px; /* Adjust the max-width as needed */
+  margin: 0 auto; /* Center the form horizontally */
+}
+
+section.contact-form label,
+section.contact-form input,
+section.contact-form textarea {
+  width: 100%; /* Make inputs and textarea full width */
+  box-sizing: border-box; /* Include padding and border in the width */
+  margin-bottom: 10px; /* Add some space between form elements */
+}
+
+section.contact-form textarea {
+  resize: vertical; /* Allow vertical resizing of textarea */
+}
+
+section.contact-form button {
+  width: 100%; /* Make the button full width */
+}
+
+
+
+
+/* Jocelyn's CSS */
+.sectionheader {
+  text-decoration: underline;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5em;
+  margin: 10px;
+  background-color: #fafafa;
+  /* Updated color */
+  border-bottom: solid;
+}
+
+footer {
+  border-top: solid;
+  padding: 0.5em;
+  text-align: center;
+}
+
+body {
+  background-color: #f5f5f5;
+  /* Replace with your desired color */
+}
+
+/* Login User Icon */
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined", sans-serif;
+  font-size: 50px;
+  /* Adjust the font size as needed */
+}
+
+#carouselBig .carousel-item img {
+  width: 970px;
+  height: 300px;
+  /* Update the height value as per your requirement */
+  object-fit: cover;
+}
