@@ -1,56 +1,58 @@
-<?php
-session_start();
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Inserting Product Dashboard</title>
+    <?php
+    // Include head.inc.php for the <head> section
+    include "inc/head.inc.php";
 
-// Include database configuration
-$config = parse_ini_file('/var/www/private/db-config.ini');
-if (!$config) {
-    die("Failed to read database config file.");
-}
+    // Establish a database connection
+    $config = parse_ini_file('/var/www/private/db-config.ini');
+    $conn = new mysqli($config['servername'], $config['username'], $config['password'], $config['dbname']);
 
-// Establish connection to the database
-$servername = $config['servername'];
-$username = $config['username'];
-$password = $config['password'];
-$dbname = $config['dbname'];
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} else {
-    echo "Connected successfully<br>";
-}
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve brand title from the form
-    $brand_title = $_POST['brand_title'];
-
-    // Prepare SQL statement to insert brand into the database
-    $sql = "INSERT INTO ShopBrandPrototypeTable (brand_title) VALUES ('$brand_title')";
-
-    if ($conn->query($sql) === TRUE) {
-        // Insert successful
-        echo '<script>alert("Insert successful");</script>';
-    } else {
-        // Error occurred
-        echo '<script>alert("Error occurred");</script>';
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
     }
-}
 
-// Close the database connection
-$conn->close();
-?>
+    // Fetch brand titles from the database
+    $brandOptions = "";
+    $sql = "SELECT brand_title FROM ShopBrandPrototypeTable";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $brandOptions .= '<option value="' . $row["brand_title"] . '">' . $row["brand_title"] . '</option>';
+        }
+    }
+    ?>
+</head>
+<body class="bg-light">
+  <div class="container mt-3">
+    <h1 class="text-center">Insert Products</h1>
+    <!-- form -->
+    <form action="" method="post" enctype="multipart/form-data">
+      <!-- Product Title -->
+      <div class="form-outline mb-4 w-50 m-auto">
+        <label for="product_title" class="form-label">Product title</label>
+        <input type="text" name="product_title" id="product_title" class="form-control" placeholder="Enter Product Title" autocomplete="off">
+      </div>
+      <!-- Description -->
+      <div class="form-outline mb-4 w-50 m-auto">
+        <label for="description" class="form-label">Product Description</label>
+        <input type="text" name="description" id="description" class="form-control" placeholder="Enter Product Description" autocomplete="off">
+      </div>
+      <!-- Brands -->
+      <div class="form-outline mb-4 w-50 m-auto">
+        <select name="product_brands" id="product_brands" class="form-select">
+         <option value="">Select a Brand</option>
+         <?php echo $brandOptions; ?>
+        </select>
+      </div>
 
-<form action="" method="post" class="mb-2">
-    <div class="input-group w-90 mb-3">
-        <span class="input-group-text bg-info" id="basic-addon1">
-            <i class="fa-solid fa-receipt"></i>
-        </span>
-        <input type="text" class="form-control" name="brand_title" placeholder="Insert Brands" 
-        aria-label="brands" aria-describedby="basic-addon1">
-    </div>
-    <div class="input-group w-10 mb-2 auto">
-        <button type="submit" class="bg-info p-2 my-3 border-0">Insert Brands</button>
-    </div>
-</form>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+</body>
+</html>
