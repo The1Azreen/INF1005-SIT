@@ -30,7 +30,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="cart.php">
+                    <a class="nav-link" href="cart.inc.php">
                         <span class="material-icons-outlined">shopping_cart</span>
                     </a>
                 </li>
