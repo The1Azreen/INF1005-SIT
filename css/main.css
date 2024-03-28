@@ -100,27 +100,26 @@ body {
 }
 
 /* Reviews Section */
-#reviews {
-  margin-top: 50px;
+.review {
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+  border-radius: 5px;
 }
 
-.card {
-  margin-bottom: 20px;
+.review h4 {
+  color: #171717;
+  font-weight: 700;
+  margin-bottom: 5px;
 }
 
-.card-title {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
+.review .rating i {
+  color: rgb(207, 182, 40);
+  margin-right: 4px;
 }
-
-.card-text {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-.text-muted {
-  font-size: 12px;
+.review p {
+  color: #171717;
+  line-height: 1.5;
 }
 
 /* Comment Section */
@@ -191,4 +190,39 @@ textarea {
 .star-rating i:hover {
   color: #0d6efd;
   cursor: pointer;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 36px;
+  height: 36px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-top: -18px;
+  /*   border: 2px solid while; */
+  opacity: 10; /* Add this line to make the icon visible */
+}
+
+/* Enable pointer events on the buttons */
+.carousel-control {
+  pointer-events: auto;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  font-size: 32px;
+  color: white;
+  font-weight: bold;
+  line-height: 1;
+  display: block;
+}
+
+.carousel-control-prev-icon::before,
+.carousel-control-next-icon::before {
+  color: transparent;
+  -webkit-text-stroke: 2px black;
 }

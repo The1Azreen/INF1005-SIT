@@ -2,19 +2,13 @@
 <html lang="en">
 
 <head>
-  <?php
-  // Include head.inc.php for the <head> section
-  include "inc/head.inc.php";
-  ?>
+  <?php include "inc/head.inc.php"; ?>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css">
 </head>
 
 <body>
-  <?php
-  // Include nav.inc.php for the navigation menu
-  include "inc/nav.inc.php";
-  ?>
+  <?php include "inc/nav.inc.php"; ?>
 
   <main class="container">
     <!-- Product Section -->
@@ -49,21 +43,42 @@
         </div>
       </div>
     </section>
-
+    <!-- Product Reviews Section -->
     <section class="product_reviews">
       <h3>Reviews</h3>
-      <div class="review">
-        <h4>John Doe</h4>
-        <p>This laptop is amazing! It is fast, lightweight, and has a great battery life. I use it for work and it has been a great investment.</p>
-      </div>
-      <div class="review">
-        <h4>Jane Smith</h4>
-        <p>I bought this laptop for my daughter for school and she loves it. It is easy to use and has all the features she needs for her classes.</p>
-      </div>
+
+      <?php
+      // Fetch reviews from the database or API
+      $reviews = [
+        [
+          'name' => 'John Doe',
+          'comment' => 'This laptop is amazing! It is fast, lightweight, and has a great battery life. I use it for work and it has been a great investment.',
+          'rating' => 5
+        ],
+        [
+          'name' => 'Jane Smith',
+          'comment' => 'I bought this laptop for my daughter for school and she loves it. It is easy to use and has all the features she needs for her classes.',
+          'rating' => 4
+        ]
+      ];
+
+      // Display each review
+      foreach ($reviews as $review) {
+        echo '<div class="review">';
+        echo '<h4>' . $review['name'] . '</h4>';
+        echo '<div class="rating">';
+        for ($i = 0; $i < $review['rating']; $i++) {
+          echo '<i class="fas fa-star"></i>';
+        }
+        echo '<p>' . $review['comment'] . '</p>';
+        echo '</div>';
+        echo '</div>';
+      }
+      ?>
 
       <div class="review_form">
         <h3>Add a Review</h3>
-        <form action="product_description.php" method="post">
+        <form action="add-review.php" method="post" id="add-review" class="form-horizontal">
           <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" class="form-control" required>
@@ -95,16 +110,11 @@
         </form>
       </div>
     </section>
-
   </main>
+
   <div class="push"></div>
-  <?php
-  // Include footer.inc.php for the footer section
-  include "inc/footer.inc.php";
-  ?>
 
-
+  <?php include "inc/footer.inc.php"; ?>
 </body>
-
 
 </html>
