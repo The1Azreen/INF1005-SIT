@@ -98,7 +98,7 @@ function updatepassword()
                 border-bottom: 2px solid #D3D3D3;
                 margin-bottom: 10px;">
                         <h3><b>Your password is updated!</b></h3>
-                        <input onclick="window.location='user_profile.php'" class="btn btn-success" type="submit" 
+                        <input onclick="window.location='user.php'" class="btn btn-success" type="submit" 
                         value="Return to profile">
                     </div>
                     <?php
