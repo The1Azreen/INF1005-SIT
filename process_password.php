@@ -115,7 +115,7 @@ function updatepassword()
                         <p>
                             <?php echo $errorMsg; ?>
                         </p>
-                        <input onclick="window.location='user_profile.php'" class="btn btn-danger" type="submit"
+                        <input onclick="window.location='user.php'" class="btn btn-danger" type="submit"
                             value="Return to profile" />
                     </div>
                     <?php
