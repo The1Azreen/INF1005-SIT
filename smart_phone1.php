@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Iphone 11 | CircuitCart</title>
+    <title>IPhone 11 | CircuitCart</title>
     <?php
     // Include head.inc.php for the <head> section
     include "inc/head.inc.php";
@@ -14,16 +14,11 @@
 </head>
 
 <body>
-    <!--     <?php
-                // Include header.inc.php for the header section
-                include "inc/header.inc.php";
-                ?> -->
+    <!-- Navigation menu inclusion -->
+    <?php include "inc/nav.inc.php"; ?>
 
-    <?php
-    // Include nav.inc.php for the navigation menu
-    include "inc/nav.inc.php";
-    ?>
-    <div class="container mt-5">
+    <!-- Main Content -->
+    <div class="container mt-5" aria-label="Product details for iPhone 11">
         <div class="row">
             <!-- Product Description Column -->
             <div class="col-md-6">
@@ -34,31 +29,30 @@
                     Its all-day battery life, coupled with the toughness of aerospace-grade aluminum and the toughest glass ever in a smartphone, offers peace of mind.
                     The iPhone 11’s 6.1-inch Liquid Retina HD display ensures everything looks stunning.</p>
                 <p><strong>Technical Description:</strong></p>
-                <li>Dual-Camera System: Capture wider views with the 12MP Ultra Wide camera.</li>
-                <li>A13 Bionic Chip: Experience lightning-fast performance and power efficiency.</li>
-                <li>All-Day Battery Life: Stay powered throughout the day with intelligent battery life.</li>
-                <li>Durable Design: Aerospace-grade aluminum and the toughest glass in a smartphone.</li>
-                <li>Liquid Retina Display: Immerse yourself in true-to-life colors with a 6.1-inch display.</li>
-                <li>Face ID: Secure authentication and Apple Pay with just a glance.</li>
-                <h3 class="price">$800.00</h3>
-                <p><s>$1000</s></p>
+                <ul>
+                    <li>Dual-Camera System: Capture wider views with the 12MP Ultra Wide camera.</li>
+                    <li>A13 Bionic Chip: Experience lightning-fast performance and power efficiency.</li>
+                    <li>All-Day Battery Life: Stay powered throughout the day with intelligent battery life.</li>
+                    <li>Durable Design: Aerospace-grade aluminum and the toughest glass in a smartphone.</li>
+                    <li>Liquid Retina Display: Immerse yourself in true-to-life colors with a 6.1-inch display.</li>
+                    <li>Face ID: Secure authentication and Apple Pay with just a glance.</li>
+                </ul>
+                <h3 class="price">$600.00</h3>
                 <div class="alert alert-warning" role="alert">
                     Note: A cancellation fee will apply. Cancellation fees may differ depending on your region.
                 </div>
-                <a href="/cart.php" class="btn btn-primary" role="button">Add to Cart</a>
+                <a href="/cart.php" class="btn btn-primary" role="button" aria-label="Add iPhone 11 to cart">Add to Cart</a>
             </div>
 
             <!-- Product Image Column -->
             <div class="col-md-6">
-                <img src="images/product_images/Smart Phone 1.webp" alt="Image of Iphone 11" class="img-fluid">
+                <img src="images/product_images/Smart Phone 1.webp" alt="Image of iPhone 11" class="img-fluid" aria-label="Image of iPhone 11">
             </div>
         </div>
     </div>
 
-    <?php
-    // Include footer.inc.php for the footer section
-    include "inc/footer.inc.php";
-    ?>
+    <!-- Footer section inclusion -->
+    <?php include "inc/footer.inc.php"; ?>
 
 </body>
 
