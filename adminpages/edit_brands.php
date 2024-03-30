@@ -1,7 +1,7 @@
 <?php
 session_start();
-// Include database configuration
 include "adminpages/inc/header.inc.php";
+// Include database configuration
 $config = parse_ini_file('/var/www/private/db-config.ini');
 if (!$config) {
     die("Failed to read database config file.");
@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo '<script>alert("Brand updated successfully"); window.location.href = "index.php?view_brands";</script>';
     } else {
         // Error occurred
-        echo '<script>alert("Error occurred while editing brand"); window.location.href = "index.php?view_brands";</script>'
+        echo '<script>alert("Error occurred while updating brand"); window.location.href = "index.php?view_brands";</script>';
     }
 }
 
