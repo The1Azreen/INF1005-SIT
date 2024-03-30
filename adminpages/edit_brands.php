@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "adminpages/inc/header.inc.php";
+//include "adminpages/inc/header.inc.php";
 // Include database configuration
 $config = parse_ini_file('/var/www/private/db-config.ini');
 if (!$config) {
@@ -44,21 +44,46 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Brand</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Add any additional custom styles here */
+    </style>
+</head>
 <body>
 
 <div class="container">
-    <h3 class="text-center text-success">Edit Brand</h3>
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-        <div class="form-group">
-            <label for="new_brand_title">New Brand Title:</label>
-            <input type="text" class="form-control" id="new_brand_title" name="new_brand_title" required>
-        </div>
-        <input type="hidden" name="brand_id" value="<?php echo $_GET['brand_id']; ?>">
-        <button type="submit" class="btn btn-primary">Update Brand</button>
-    </form>
-</div>
+        <h3 class="text-center text-success">Edit Brand</h3>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-info" id="basic-addon1">
+                            <i class="fas fa-receipt"></i> <!-- Updated to use Font Awesome 6 classes -->
+                        </span>
+                        <input type="text" class="form-control" id="new_brand_title" name="new_brand_title" placeholder="New Brand Title" aria-label="New Brand Title" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="hidden" name="brand_id" value="<?php echo $_GET['brand_id']; ?>">
+                        <button type="submit" class="btn btn-info btn-block">Update Brand</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 
-
-
+<!-- Bootstrap JS (optional, only if you need Bootstrap JS functionalities) -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+

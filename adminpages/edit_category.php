@@ -1,5 +1,6 @@
 <?php
 session_start();
+//include "adminpages/inc/header.inc.php";
 // Include database configuration
 $config = parse_ini_file('/var/www/private/db-config.ini');
 if (!$config) {
@@ -41,31 +42,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $conn->close();
 ?>
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Category</title>
-    <!-- Include Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Your Page Title</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 <body>
+    <!-- Your form goes here -->
+    <div class="container">
+        <h3 class="text-center text-success">Edit Category</h3>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-info" id="basic-addon1">
+                            <i class="fas fa-receipt"></i> <!-- Updated to use Font Awesome 6 classes -->
+                        </span>
+                        <input type="text" class="form-control" id="new_category_title" name="new_category_title" placeholder="New Category Title" aria-label="New Category Title" aria-describedby="basic-addon1" required>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="hidden" name="category_id" value="<?php echo $_GET['category_id']; ?>">
+                        <button type="submit" class="btn btn-info btn-block">Update Category</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 
-<div class="container">
-    <h3 class="text-center text-success">Edit Category</h3>
-    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-        <div class="form-group">
-            <label for="new_category_title">New Category Title:</label>
-            <input type="text" class="form-control" id="new_category_title" name="new_category_title" required>
-        </div>
-        <input type="hidden" name="category_id" value="<?php echo $_GET['category_id']; ?>">
-        <button type="submit" class="btn btn-primary">Update Category</button>
-    </form>
-</div>
-
-<!-- Include Font Awesome for icons -->
-<script src="https://kit.fontawesome.com/a076d05399.js"></script>
-
+    <!-- Bootstrap JS (optional, only if you need Bootstrap JS functionalities) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+
