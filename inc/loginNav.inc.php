@@ -6,7 +6,7 @@ $cart_empty = false;
 $totalPrice = 0; // Initialize total price variable
 $totalQuantity = 0; // Initialize total quantity variable
 
-if (isset ($_SESSION['cart']) && !empty ($_SESSION['cart'])) {
+if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
     $cartItems = $_SESSION['cart'];
     $cart_empty = false;
 
@@ -42,6 +42,12 @@ if (isset ($_SESSION['cart']) && !empty ($_SESSION['cart'])) {
                 <li class="nav-item">
                     <a class="nav-link" href="product.php">Products</a>
                 </li>
+                <?php if (isset($_SESSION["type"]) == true) {
+                    ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="adminPlaceholder.php">Admin</a>
+                    </li>
+                <?php } ?>
             </ul>
         </div>
     </div>
