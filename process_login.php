@@ -124,7 +124,7 @@ function authenticateUser()
                         value="Return to Home">
                     <?php } else {?>
                         <!-- display admin main page instead, change # with admin php -->
-                        <input onclick="window.location='#'" class="btn btn-success" type="submit"
+                        <input onclick="window.location='adminpages/index.php'" class="btn btn-success" type="submit"
                             value="Return to Home">
                     <?php } ?>
                 </div>

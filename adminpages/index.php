@@ -9,9 +9,6 @@
 </head>
 
 <body>
-    <?php
-    include "../inc/nav.inc.php";
-    ?>
     <main class="container">
         <!-- second child -->
         <div class="bg-light">
