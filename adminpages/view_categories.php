@@ -1,6 +1,7 @@
 <?php
 session_start();
 // Include database configuration
+include "adminpages/inc/header.inc.php";
 $config = parse_ini_file('/var/www/private/db-config.ini');
 if (!$config) {
     die("Failed to read database config file.");
@@ -23,13 +24,7 @@ if ($conn->connect_error) {
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Categories</title>
-    <!-- Include Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
+
 <body>
 
 <div class="container">
@@ -74,8 +69,7 @@ if ($conn->connect_error) {
     </table>
 </div>
 
-<!-- Include Font Awesome for icons -->
-<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
 
 </body>
 </html>

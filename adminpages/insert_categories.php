@@ -1,6 +1,7 @@
 <?php
 session_start();
 // Include database configuration
+include "adminpages/inc/header.inc.php";
 $config = parse_ini_file('/var/www/private/db-config.ini');
 if (!$config) {
     die("Failed to read database config file.");
@@ -43,15 +44,25 @@ $conn->close();
 ?>
 
 <!-- HTML Form -->
-<form action="" method="post" class="mb-2">
-    <div class="input-group w-90 mb-3">
-        <span class="input-group-text bg-info" id="basic-addon1">
-            <i class="fa-solid fa-receipt"></i>
-        </span>
-        <input type="text" class="form-control" name="cat_title" placeholder="Insert Categories" 
-        aria-label="categories" aria-describedby="basic-addon1">
-    </div>
-    <div class="input-group w-10 mb-2 auto">
-        <button type="submit" class="bg-info p-2 my-3 border-0">Insert Categories</button>
-    </div>
-</form>
+<div class="container">
+    <h3 class="text-center text-success">Insert Category</h3>
+    <form action="" method="post" class="mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="input-group mb-3">
+                    <span class="input-group-text bg-info" id="basic-addon1">
+                        <i class="fa-solid fa-receipt"></i>
+                    </span>
+                    <input type="text" class="form-control" name="cat_title" placeholder="Insert Category" aria-label="Category" aria-describedby="basic-addon1">
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <button type="submit" class="btn btn-info btn-block">Insert Category</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
