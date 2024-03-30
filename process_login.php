@@ -1,107 +1,160 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Include your CSS file -->
-</head>
-<body>
-
 <?php
-include_once "inc/head.inc.php"; // Include head file
-include_once "inc/nav.inc.php"; // Include nav file
-
-session_start();
-
-// Include database configuration
-$config = parse_ini_file('/var/www/private/db-config.ini');
-if (!$config) {
-    die("Failed to read database config file.");
-}
-
-// Helper function to authenticate the login
-function authenticateUser($email, $password)
+session_start(); // Start the session
+/*
+* Helper function that checks input for malicious or unwanted content.
+*/
+function sanitize_input($data)
 {
-    global $config, $fname, $lname, $errorMsg, $success;
-
-    // Create database connection
-    $conn = new mysqli(
-        $config['servername'],
-        $config['username'],
-        $config['password'],
-        $config['dbname']
-    );
-
-    // Check connection
-    if ($conn->connect_error) {
-        $errorMsg = "Connection failed: " . $conn->connect_error;
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
+}
+/*
+ * Helper function to authenticate the login.
+ */
+function authenticateUser()
+{
+    global $memberid, $fname, $lname, $email,$uType, $pwd_hashed, $errorMsg, $success;
+    $success = true;
+    // Create database connection.
+    $config = parse_ini_file('/var/www/private/db-config.ini');
+    if (!$config) {
+        $errorMsg = "Failed to read database config file.";
         $success = false;
     } else {
-        // Prepare the statement
-        $stmt = $conn->prepare("SELECT * FROM world_of_pets_members WHERE email=?");
+        $conn = new mysqli(
+            $config['servername'],
+            $config['username'],
+            $config['password'],
+            $config['dbname']
+        );
+        // Check connection
+        if ($conn->connect_error) {
+            $errorMsg = "Connection failed: " . $conn->connect_error;
+            $success = false;
+        } else {
 
-        // Bind & execute the query statement
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
+            // Prepare the statement:
+            $stmt = $conn->prepare("SELECT * FROM members WHERE email=?");
+            // Bind & execute the query statement:
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows > 0) {
+                // Note that email field is unique, so should only have
+                // one row in the result set.
+                $row = $result->fetch_assoc();
+                $memberid = $row["member_id"];
+                $fname = $row["fname"];
+                $lname = $row["lname"];
+                $uType = $row["acc_type"];
 
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $fname = $row["fname"];
-            $lname = $row["lname"];
-            $pwd_hashed = $row["password"];
-
-            // Check if the password matches
-            if (password_verify($password, $pwd_hashed)) {
-                // Password is correct, set session variables
-                $_SESSION["email"] = $email;
-                $_SESSION["fname"] = $fname;
-                $_SESSION["lname"] = $lname;
-                $_SESSION["success_msg"] = "Login successful!";
-                $success = true;
+                $pwd_hashed = $row["password"];
+                // Check if the password matches:
+                if (!password_verify($_POST["pwd"], $pwd_hashed)) {
+                    // Don't be too specific with the error message - hackers don't
+                    // need to know which one they got right or wrong. :)
+                    $errorMsg = "password doesn't match...";
+                    $success = false;
+                }
             } else {
-                $errorMsg = "Invalid email or password";
+                $errorMsg = "Email not found";
                 $success = false;
             }
-        } else {
-            $errorMsg = "Invalid email or password";
-            $success = false;
+            $stmt->close();
         }
-        $stmt->close();
         $conn->close();
     }
 }
-
-// Check if the form was submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve user inputs
-    $email = $_POST["email"];
-    $password = $_POST["pwd"];
-
-    // Call the authenticateUser() function
-    authenticateUser($email, $password);
-
-    // Display success or error message without redirecting
-    if ($success) {
-        echo "<h4 class='text-center'>Login successful!</h4>";
-        echo "<p class='text-center'>Email: $email</p>";
-        echo "<div class='text-center mb-3'><button onclick='goBack()' class='btn btn-success'>Go Back</button></div>";
-    } else {
-        $_SESSION["error"] = $errorMsg;
-        echo "<h4 class='text-center'>Login Failed!</h4>";
-        echo "<p class='text-center'>Email: $email</p>";
-        echo "<div class='text-center mb-3'><button onclick='goBack()' class='btn btn-success'>Go Back</button></div>";
-    }
-}
 ?>
+<!DOCTYPE html>
+<html lang="en">
 
-<script>
-    // Function to navigate back
-    function goBack() {
-        window.history.back();
-    }
-</script>
+<head>
+    <title>User Login</title>
+    <?php
+    include "inc/head.inc.php";
+    ?>
+</head>
 
+<body>
+    <?php
+    include "inc/nav.inc.php";
+    ?>
+    <main class="container">
+        <div>
+            <?php
+            $email = $mailerrorMsg = "";
+            $pwd = $passerrorMsg = "";
+            $mailsuccess = true;
+            $passsuccess = true;
+            if (empty ($_POST["email"])) {
+                $mailerrorMsg .= "Email is required.<br>";
+                $mailsuccess = false;
+            } else {
+                $email = sanitize_input($_POST["email"]);
+                // Additional check to make sure e-mail address is well-formed.
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $mailerrorMsg = "Invalid email format.<br>";
+                    $mailsuccess = false;
+                }
+            }
+            if (empty ($_POST["pwd"])) {
+                $passerrorMsg = "Passwords is required.<br>";
+                $passsuccess = false;
+            }
+
+            if ($mailsuccess && $passsuccess) {
+                authenticateUser();
+            } else {
+                $success = false;
+            }
+
+            if ($success) {
+                ?>
+                <div
+                    style="padding: 20px; border-top: 2px solid #D3D3D3; margin-top: 10px; border-bottom: 2px solid #D3D3D3; margin-bottom: 10px;">
+                    <h3><b>Login successful!</b></h3>
+                    <h4>Welcome back,
+                        <?php echo $fname . " " . $lname; ?>
+                    </h4>
+                    <?php if ($uType == 'false'){ ?>
+                        <input onclick="window.location='index.php'" class="btn btn-success" type="submit"
+                        value="Return to Home">
+                    <?php } else {?>
+                        <!-- display admin main page instead, change # with admin php -->
+                        <input onclick="window.location='adminpages/index.php'" class="btn btn-success" type="submit"
+                            value="Return to Home">
+                    <?php } ?>
+                </div>
+                    <?php 
+                        $_SESSION['user'] = $fname;
+                        $_SESSION['memberid'] = $memberid;
+                    ?>
+                <?php
+                } else {
+                ?>
+                <div
+                    style="padding: 20px; border-top: 2px solid #D3D3D3; margin-top: 10px; border-bottom: 2px solid #D3D3D3; margin-bottom: 10px;">
+                    <h3><b>Oops!</b></h3>
+                    <h4><b>The following errors were detected:</b></h4>
+                    <p>
+                        <?php echo $errorMsg; ?>
+                    </p>
+                    <input onclick="window.location='login.php'" class="btn btn-warning" type="submit"
+                        value="Return to Login" />
+                </div>
+                <?php
+            }
+            ?>
+        </div>
+    </main>
+    <?php
+    include "inc/footer.inc.php";
+    ?>
 </body>
+
 </html>
+
+

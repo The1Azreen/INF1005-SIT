@@ -1,55 +1,56 @@
+<?php
+session_start(); // Start the session
+?>
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
     <?php
-    // Include head.inc.php for the <head> section
     include "inc/head.inc.php";
     ?>
 </head>
 
+
 <body>
-
-    <!--     <?php
-                // Include header.inc.php for the header section
-                include "inc/header.inc.php";
-                ?> -->
-
-    <?php
-    // Include nav.inc.php for the navigation menu
-    include "inc/nav.inc.php";
+    <?php // Check if user is login or not
+    if (isset ($_SESSION["user"]) == "") {
+        include "inc/nav.inc.php";
+    } else {
+        include "inc/loginNav.inc.php";
+    }
     ?>
-
     <main class="container">
         <!--BIG CAROUSELL-->
         <section>
             <div id="carouselBig" class="carousel slide carousel-fade" data-ride="carousel">
                 <ol class="carousel-indicators">
-                    <?php
-                    $carouselItems = [
-                        ["images/Banners/hugo-agut-tugal-6cdIdu8KkLg-unsplash.jpg", "First slide"],
-                        ["images/Banners/linkedin-sales-solutions-YDVdprpgHv4-unsplash.jpg", "Second slide"],
-                        ["images/Banners/nsys-group-ZvhZBzwmLic-unsplash.jpg", "Third slide"]
-                    ];
-
-                    foreach ($carouselItems as $index => $item) {
-                        $activeClass = ($index === 0) ? "active" : "";
-                    ?>
-                        <li data-target="#carouselBig" data-slide-to="<?php echo $index; ?>" class="<?php echo $activeClass; ?>"></li>
-                    <?php } ?>
+                    <li data-target="#carouselBig" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselBig" data-slide-to="1"></li>
+                    <li data-target="#carouselBig" data-slide-to="2"></li>
                 </ol>
                 <div class="carousel-inner">
-                    <?php foreach ($carouselItems as $index => $item) {
-                        $activeClass = ($index === 0) ? "active" : "";
-                    ?>
-                        <div class="carousel-item <?php echo $activeClass; ?>">
-                            <img class="d-block w-100" src="<?php echo $item[0]; ?>" alt="<?php echo $item[1]; ?>">
-                            <div class="carousel-caption d-none d-md-block text-start">
-                            </div>
+
+                    <!--EACH CAROUSELL CARD-->
+                    <div class="carousel-item active">
+                        <img class="d-block w-100" src="images/Banners/hugo-agut-tugal-6cdIdu8KkLg-unsplash.jpg"
+                            alt="First slide">
+                        <div class="carousel-caption d-none d-md-block text-center">
+                            <h5>BUY NOW</h>
                         </div>
-                    <?php } ?>
+                    </div>
+
+                    <div class="carousel-item">
+                        <img class="d-block w-100"
+                            src="images/Banners/linkedin-sales-solutions-YDVdprpgHv4-unsplash.jpg" alt="Second slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100" src="images/Banners/nsys-group-ZvhZBzwmLic-unsplash.jpg"
+                            alt="Third slide">
+                    </div>
                 </div>
 
+                <!--ARROWS-->
                 <a class="carousel-control-prev" href="#carouselBig" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
@@ -58,6 +59,7 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
+                <!--ARROWS-->
             </div>
         </section>
 

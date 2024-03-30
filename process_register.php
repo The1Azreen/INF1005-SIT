@@ -1,125 +1,7 @@
 <?php
-include_once "inc/head.inc.php"; // Include head file
-include_once "inc/nav.inc.php"; // Include nav file
-
-// Initialize variables
-$fname = $lname = $email = $pwd = $pwd_confirm = $errorMsg = "";
-$success = true;
-
-// Validate and sanitize form data
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Validate and sanitize other form inputs similarly as you did for email
-
-    // Validate and sanitize first name
-    if (empty($_POST["fname"])) {
-        $errorMsg .= "First Name is required.<br>";
-        $success = false;
-    } else {
-        $fname = sanitize_input($_POST["fname"]);
-    }
-
-    // Validate and sanitize last name
-    if (empty($_POST["lname"])) {
-        $errorMsg .= "Last Name is required.<br>";
-        $success = false;
-    } else {
-        $lname = sanitize_input($_POST["lname"]);
-    }
-
-    // Validate and sanitize email
-    if (empty($_POST["email"])) {
-        $errorMsg .= "Email is required.<br>";
-        $success = false;
-    } else {
-        $email = sanitize_input($_POST["email"]);
-        // Additional check to make sure e-mail address is well-formed.
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $errorMsg .= "Invalid email format.<br>";
-            $success = false;
-        }
-    }
-
-    // Validate and sanitize password
-    if (empty($_POST["pwd"]) || empty($_POST["pwd_confirm"]) || $_POST["pwd"] !== $_POST["pwd_confirm"]) {
-        $errorMsg .= "Passwords do not match.<br>";
-        $success = false;
-    } else {
-        $pwd = sanitize_input($_POST["pwd"]);
-    }
-
-    // If form data is valid, proceed to save member to database
-    if ($success) {
-        // Hash the password for security
-        $pwd_hashed = password_hash($pwd, PASSWORD_DEFAULT);
-
-        // Call function to save member to database
-        if (saveMemberToDB($email, $fname, $lname, $pwd_hashed)) {
-            // Display success message
-            echo "<h4 class='text-center'>Registration successful!</h4>";
-            echo "<p class='text-center'>Email: " . $email . "</p>";
-            echo "<div class='text-center mb-3'><button onclick='goBack()' class='btn btn-success'>Go Back</button></div>";
-        } else {
-            // Display error message
-            $errorMsg = "An account already exists with this email.";
-            echo "<h4 class='text-center'>The following input errors were detected:</h4>";
-            echo "<p class='text-center'>" . $errorMsg . "</p>";
-            echo "<div class='text-center mb-3'><button onclick='goBack()' class='btn btn-success'>Go Back</button></div>";
-        }
-    } else {
-        // Display error message
-        echo "<h4 class='text-center'>The following input errors were detected:</h4>";
-        echo "<p class='text-center'>" . $errorMsg . "</p>";
-        echo "<div class='text-center mb-3'><button onclick='goBack()' class='btn btn-success'>Go Back</button></div>";
-    }
-}
-
-// Function to save member to database
-function saveMemberToDB($email, $fname, $lname, $pwd_hashed)
-{
-    // Create database connection
-    $config = parse_ini_file('/var/www/private/db-config.ini');
-    if (!$config) {
-        return false; // Failed to read database config file
-    }
-
-    $conn = new mysqli(
-        $config['servername'],
-        $config['username'],
-        $config['password'],
-        $config['dbname']
-    );
-
-    // Check connection
-    if ($conn->connect_error) {
-        return false; // Connection failed
-    }
-
-    // Check if the email already exists
-    $check_stmt = $conn->prepare("SELECT * FROM world_of_pets_members WHERE email=?");
-    $check_stmt->bind_param("s", $email);
-    $check_stmt->execute();
-    $check_result = $check_stmt->get_result();
-
-    if ($check_result->num_rows > 0) {
-        // Email already exists
-        $check_stmt->close();
-        $conn->close();
-        return false;
-    }
-
-    // Email does not exist, proceed to insert new member
-    $insert_stmt = $conn->prepare("INSERT INTO world_of_pets_members (fname, lname, email, password) VALUES (?, ?, ?, ?)");
-    $insert_stmt->bind_param("ssss", $fname, $lname, $email, $pwd_hashed);
-    $result = $insert_stmt->execute();
-
-    // Close statements and connection
-    $insert_stmt->close();
-    $conn->close();
-
-    return $result;
-}
-
-// Sanitize input function
+/*
+ * Helper function that checks input for malicious or unwanted content.
+ */
 function sanitize_input($data)
 {
     $data = trim($data);
@@ -128,12 +10,162 @@ function sanitize_input($data)
     return $data;
 }
 
-include_once "inc/footer.inc.php"; // Include footer file
-?>
+/*
+ * Helper function to write the member data to the database.
+ */
+function saveMemberToDB()
+{
+    // Create database connection.
+    $config = parse_ini_file('/var/www/private/db-config.ini');
+    global $email, $fname, $lname, $pwd, $errorMsg, $success;
+    $success = true;
+    $conn = new mysqli(
+        $config['servername'],
+        $config['username'],
+        $config['password'],
+        $config['dbname']
+    );
+    // Check connection
+    if ($conn->connect_error) {
+        $errorMsg = "Connection failed: " . $conn->connect_error;
+        $success = false;
+    } else {
+        // Prepare the statement:
+        $stmt = $conn->prepare("SELECT * FROM members WHERE email=?");
+        // Bind & execute the query statement:
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            $errorMsg = "Email already exist";
+            $success = false;
+        } else {
+            // Prepare the statement:
+            $stmt = $conn->prepare("INSERT INTO members (fname, lname, email, password, acc_type) 
+            VALUES (?, ?, ?, ?, ?)");
+            // Capture user input
+            $fname = $_POST["fname"];
+            $lname = $_POST["lname"];
+            $pwd = $_POST["pwd"];
+            // Hash the password
+            $hashedPassword = password_hash($pwd, PASSWORD_DEFAULT);
+            $accType = 'false';
 
-<script>
-    // Function to navigate back
-    function goBack() {
-        window.history.back();
+            // Bind & execute the query statement:
+            $stmt->bind_param("sssss", $fname, $lname, $email, $hashedPassword, $accType);
+
+            if (!$stmt->execute()) {
+                $errorMsg = "Execute failed: (" . $stmt->errno . ") " . $stmt->error;
+                $success = false;
+            }
+
+            $stmt->close();
+        }
+        $conn->close();
     }
-</script>
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Project</title>
+    <?php
+    include "inc/head.inc.php";
+    ?>
+</head>
+
+<body>
+    <?php
+    include "inc/nav.inc.php";
+    ?>
+    <main class="container">
+        <div>
+            <?php
+            $email = $mailerrorMsg = "";
+            $pwd = $passerrorMsg = "";
+            $mailsuccess = true;
+            $passsuccess = true;
+            if (empty($_POST["email"])) {
+                $mailerrorMsg = "Email is required.<br>";
+                $mailsuccess = false;
+            } else {
+                $email = sanitize_input($_POST["email"]);
+                // Additional check to make sure e-mail address is well-formed.
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $mailerrorMsg = "Invalid email format.";
+                    $mailsuccess = false;
+                }
+            }
+            if (empty($_POST["pwd"])) {
+                $passerrorMsg = "Passwords is required.<br>";
+                $passsuccess = false;
+            } else {
+                if (!($_POST["pwd"] == $_POST["pwd_confirm"])) {
+                    $passerrorMsg = "Password do not match.";
+                    $passsuccess = false;
+                }
+            }
+            if ($mailsuccess && $passsuccess) {
+                saveMemberToDB();
+                if ($success) {
+                    ?>
+                    <div style="padding: 20px; 
+                    border-top: 2px solid #D3D3D3; 
+                    margin-top: 10px; 
+                    border-bottom: 2px solid #D3D3D3;
+                    margin-bottom: 10px;">
+                        <h3><b>Your registration is successful!</b></h3>
+                        <h4>Thank you for signing up,
+                            <?php echo $_POST["fname"] . " " . $_POST["lname"]; ?>
+                        </h4>
+                        <input onclick="window.location='index.php'" class="btn btn-success" type="submit" value="Log-in">
+                    </div>
+                    <?php
+
+                } else {
+                    ?>
+                    <div style="padding: 20px; 
+                    border-top: 2px solid #D3D3D3; 
+                    margin-top: 10px; 
+                    border-bottom: 2px solid #D3D3D3;
+                    margin-bottom: 10px;">
+                        <h3><b>Oops!</b></h3>
+                        <h4><b>The following errors were detected:</b></h4>
+                        <p>
+                            <?php echo $errorMsg; ?>
+                        </p>
+                        <input onclick="window.location='register.php'" class="btn btn-danger" type="submit"
+                            value="Return to Sign Up" />
+                    </div>
+                    <?php
+                }
+            } else {
+                ?>
+                <div style="padding: 20px; 
+                border-top: 2px solid #D3D3D3; 
+                margin-top: 10px; 
+                border-bottom: 2px solid #D3D3D3;
+                margin-bottom: 10px;">
+                    <h3><b>Oops!</b></h3>
+                    <h4><b>The following errors were detected:</b></h4>
+                    <p>
+                        <?php echo $mailerrorMsg; ?>
+                    </p>
+                    <p>
+                        <?php echo $passerrorMsg; ?>
+                    </p>
+                    <input onclick="window.location='register.php'" class="btn btn-danger" type="submit"
+                        value="Return to Sign Up" />
+                </div>
+                <?php
+            }
+            ?>
+        </div>
+    </main>
+    <?php
+    include "inc/footer.inc.php";
+    ?>
+</body>
+
+</html>
