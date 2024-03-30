@@ -31,3 +31,15 @@ stars.forEach((star, index) => {
     stars.forEach((el) => el.classList.remove("active"));
   });
 });
+
+// to get the product id from the url
+const images = document.querySelectorAll(".img-responsive");
+
+images.forEach(function (image) {
+  image.addEventListener("click", function () {
+    const imageSrc = this.src;
+    const urlParams = new URLSearchParams(imageSrc.split("?")[1]);
+    const productId = urlParams.get("product_id");
+    window.location.href = `product_description.php?product_id=${productId}`;
+  });
+});

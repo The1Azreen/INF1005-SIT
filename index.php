@@ -14,7 +14,7 @@ session_start(); // Start the session
 
 <body>
     <?php // Check if user is login or not
-    if (isset ($_SESSION["user"]) == "") {
+    if (isset($_SESSION["user"]) == "") {
         include "inc/nav.inc.php";
     } else {
         include "inc/loginNav.inc.php";
@@ -33,20 +33,17 @@ session_start(); // Start the session
 
                     <!--EACH CAROUSELL CARD-->
                     <div class="carousel-item active">
-                        <img class="d-block w-100" src="images/Banners/hugo-agut-tugal-6cdIdu8KkLg-unsplash.jpg"
-                            alt="First slide">
+                        <img class="d-block w-100" src="images/Banners/hugo-agut-tugal-6cdIdu8KkLg-unsplash.jpg" alt="First slide">
                         <div class="carousel-caption d-none d-md-block text-center">
                             <h5>BUY NOW</h>
                         </div>
                     </div>
 
                     <div class="carousel-item">
-                        <img class="d-block w-100"
-                            src="images/Banners/linkedin-sales-solutions-YDVdprpgHv4-unsplash.jpg" alt="Second slide">
+                        <img class="d-block w-100" src="images/Banners/linkedin-sales-solutions-YDVdprpgHv4-unsplash.jpg" alt="Second slide">
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="images/Banners/nsys-group-ZvhZBzwmLic-unsplash.jpg"
-                            alt="Third slide">
+                        <img class="d-block w-100" src="images/Banners/nsys-group-ZvhZBzwmLic-unsplash.jpg" alt="Third slide">
                     </div>
                 </div>
 
@@ -71,12 +68,14 @@ session_start(); // Start the session
                         <ol class="carousel-indicators">
                             <?php
                             $flashDeals = [
-                                ["images/flash_deals/black_digital_camera.jpeg", "Black Digital Camera"],
-                                ["images/flash_deals/silver_laptop.jpeg", "Silver Laptop"],
+                                ["images/flash_deals/black_digital_camera.jpeg?product_id=1001", "Black Digital Camera"],
+                                ["images/flash_deals/silver_laptop.jpeg?product_id=1002", "Silver Laptop"],
                                 ["images/flash_deals/fitness_tracker.jpeg", "Fitness Tracker"],
                                 ["images/flash_deals/smart_speaker.jpeg", "Smart Speaker"],
                                 ["images/flash_deals/wireless_headset.jpeg", "Wireless Headset"]
                             ];
+
+
 
                             $numSlides = ceil(count($flashDeals) / 4); // Calculate the number of slides
 
@@ -92,12 +91,25 @@ session_start(); // Start the session
                             ?>
                                 <div class="carousel-item <?php echo $activeClass; ?>">
                                     <div class="row">
+                                        <!-- <?php for ($j = $i * 4; $j < min(($i + 1) * 4, count($flashDeals)); $j++) {
+                                                    $deal = $flashDeals[$j];
+                                                ?>
+                                            <div class="col-sm-3">
+                                                <a href="product_description.php?">
+                                                    <img src="<?php echo $deal[0]; ?>" class="img-responsive product-image" style="width:70%" alt="<?php echo $deal[1]; ?>">
+                                                </a>
+                                            </div>
+                                        <?php } ?> -->
                                         <?php for ($j = $i * 4; $j < min(($i + 1) * 4, count($flashDeals)); $j++) {
                                             $deal = $flashDeals[$j];
+                                            $url = $deal[0];
+                                            $query = parse_url($url, PHP_URL_QUERY);
+                                            parse_str($query, $params);
+                                            $productId = $params['product_id'];
                                         ?>
                                             <div class="col-sm-3">
-                                                <a href="product_description.php">
-                                                    <img src="<?php echo $deal[0]; ?>" class="img-responsive" style="width:70%" alt="<?php echo $deal[1]; ?>">
+                                                <a href="product_description.php?product_id=<?php echo $productId; ?>">
+                                                    <img src="<?php echo $deal[0]; ?>" class="img-responsive product-image" style="width:70%" alt="<?php echo $deal[1]; ?>">
                                                 </a>
                                             </div>
                                         <?php } ?>
@@ -105,14 +117,6 @@ session_start(); // Start the session
                                 </div>
                             <?php } ?>
                         </div>
-                        <!--                         <a class="carousel-control-prev" href="#flashDealsCarousel" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#flashDealsCarousel" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a> -->
                         <div class="carousel-control">
                             <a class="carousel-control-prev" href="#flashDealsCarousel" role="button" data-slide="prev" style="width: 5%;">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
