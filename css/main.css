@@ -1,10 +1,9 @@
 /* Yolanda's CSS */
-.container>h1,
-.col-md-9>h2,
+.container > h1,
+.col-md-9 > h2,
 section.aboutUS {
   margin-top: 20px;
 }
-
 
 .shipping-address-container {
   padding: 20px;
@@ -17,14 +16,14 @@ section.aboutUS {
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
-  border-radius: 20px 0px 0px 20px
+  border-radius: 20px 0px 0px 20px;
 }
 
 div.message-page {
   padding: 20px;
-  border-top: 2px solid #D3D3D3;
+  border-top: 2px solid #d3d3d3;
   margin-top: 10px;
-  border-bottom: 2px solid #D3D3D3;
+  border-bottom: 2px solid #d3d3d3;
   margin-bottom: 10px;
 }
 
@@ -43,13 +42,12 @@ button.btn {
   -webkit-animation: wave 15s ease infinite;
   -moz-animation: wave 15s ease infinite;
   animation: wave 15s ease infinite;
-
 }
 
 a.btn:hover,
 button.btn:hover {
-  -webkit-animation: bounce-top-hover .9s ease;
-  animation: bounce-top-hover .9s ease;
+  -webkit-animation: bounce-top-hover 0.9s ease;
+  animation: bounce-top-hover 0.9s ease;
 }
 
 .btnRemove,
@@ -59,60 +57,59 @@ button.btn:hover {
   background: none;
 }
 
-.btnRemove>i {
+.btnRemove > i {
   align-items: center;
-  background-color: #FFE7E7;
+  background-color: #ffe7e7;
   background-position: 0 0;
-  border: 1px solid #FEE0E0;
+  border: 1px solid #fee0e0;
   border-radius: 11px;
   box-sizing: border-box;
-  color: #D33A2C;
+  color: #d33a2c;
   cursor: pointer;
   display: flex;
   font-size: 1rem;
   font-weight: 700;
   line-height: 33.4929px;
-  list-style: outside url(https://www.smashingmagazine.com/images/bullet.svg) none;
+  list-style: outside url(https://www.smashingmagazine.com/images/bullet.svg)
+    none;
   padding: 2px 12px;
   text-align: left;
   text-decoration: none;
   text-shadow: none;
   text-underline-offset: 1px;
-  transition: border .2s ease-in-out, box-shadow .2s ease-in-out;
+  transition: border 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-
 }
 
-.btnRemove>i:active,
-.btnRemove>i:hover,
-.btnRemove>i:focus {
+.btnRemove > i:active,
+.btnRemove > i:hover,
+.btnRemove > i:focus {
   outline: 0;
 }
 
-.btnRemove>i:active:hover,
-.btnRemove>i:focus:hover,
-.btnRemove>i:focus {
-  background-color: #D33A2C;
+.btnRemove > i:active:hover,
+.btnRemove > i:focus:hover,
+.btnRemove > i:focus {
+  background-color: #d33a2c;
   box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
-.btnRemove>i:active {
-  background-color: #D33A2C;
+.btnRemove > i:active {
+  background-color: #d33a2c;
   box-shadow: rgba(0, 0, 0, 0.12) 0 1px 3px 0 inset;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
-.btnRemove>i:hover {
+.btnRemove > i:hover {
   box-shadow: 0 5px 9px 0 rgba(0, 0, 0, 0.24), 0 8px 10px 0 rgba(0, 0, 0, 0.19);
-  background-color: #FFE3E3;
-  border-color: #FAA4A4;
+  background-color: #ffe3e3;
+  border-color: #faa4a4;
 }
 
 @-webkit-keyframes bounce-top-hover {
-
   0%,
   100% {
     -webkit-transform: translateY(0);
@@ -133,7 +130,6 @@ button.btn:hover {
 }
 
 @keyframes bounce-top-hover {
-
   0%,
   100% {
     -webkit-transform: translateY(0);
@@ -155,43 +151,43 @@ button.btn:hover {
 
 @-webkit-keyframes wave {
   0% {
-    background-position: 51% 0%
+    background-position: 51% 0%;
   }
 
   50% {
-    background-position: 50% 100%
+    background-position: 50% 100%;
   }
 
   100% {
-    background-position: 51% 0%
+    background-position: 51% 0%;
   }
 }
 
 @-moz-keyframes wave {
   0% {
-    background-position: 51% 0%
+    background-position: 51% 0%;
   }
 
   50% {
-    background-position: 50% 100%
+    background-position: 50% 100%;
   }
 
   100% {
-    background-position: 51% 0%
+    background-position: 51% 0%;
   }
 }
 
 @keyframes wave {
   0% {
-    background-position: 51% 0%
+    background-position: 51% 0%;
   }
 
   50% {
-    background-position: 50% 100%
+    background-position: 50% 100%;
   }
 
   100% {
-    background-position: 51% 0%
+    background-position: 51% 0%;
   }
 }
 
@@ -214,7 +210,6 @@ td {
   width: 0;
   position: fixed;
   z-index: 1000;
-  ;
   top: 0;
   right: 0;
   background-color: #fafafa;
@@ -284,8 +279,6 @@ section.contact-form button {
   /* Make the button full width */
 }
 
-
-
 /* Jocelyn's CSS */
 main {
   min-height: 80vh;
@@ -330,6 +323,7 @@ body {
   height: 300px;
   /* Update the height value as per your requirement */
   object-fit: cover;
+}
 .product_img img {
   max-width: 100%;
   height: auto;
@@ -502,4 +496,47 @@ textarea {
 .carousel-control-next-icon::before {
   color: transparent;
   -webkit-text-stroke: 2px black;
+}
+
+/*product page*/
+.product-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.product-container [data-products-per-row="2"] {
+  width: 50%;
+}
+
+.product-container [data-products-per-row="3"] {
+  width: 33.3333%;
+}
+
+.product-container [data-products-per-row="4"] {
+  width: 25%;
+}
+
+.product-card {
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .product-container [data-products-per-row="3"] {
+    width: 50%;
+  }
+
+  .product-container [data-products-per-row="4"] {
+    width: 33.3333%;
+  }
+}
+
+@media (max-width: 500px) {
+  .product-container [data-products-per-row="3"] {
+    width: 100%;
+  }
+
+  .product-container [data-products-per-row="4"] {
+    width: 50%;
+  }
 }

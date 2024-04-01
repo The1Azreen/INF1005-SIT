@@ -43,3 +43,4 @@ images.forEach(function (image) {
     window.location.href = `product_description.php?product_id=${productId}`;
   });
 });
+
