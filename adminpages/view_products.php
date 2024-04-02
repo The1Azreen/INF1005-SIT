@@ -32,7 +32,9 @@ if ($con->connect_error) {
                     <th>Product Title</th>
                     <th>Product Image</th>
                     <th>Product Price</th>
+                    <th>Quantity</th>
                     <th>Status</th>
+                    <th>Description</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -45,19 +47,23 @@ if ($con->connect_error) {
                 while ($row = mysqli_fetch_assoc($result)) {
                     $product_id = $row['product_id'];
                     $product_title = $row['product_name'];
-                    $product_image = $row['filePath'];
+                    $product_image = $row['filePath']; 
                     $product_price = $row['price'];
+                    $quantity = $row['quantity'];
                     $status = $row['status'];
+                    $product_description = $row['product_description'];
                     $number++;
+                    // Construct the complete image URL with the product_id parameter
+                    $image_url = 'http://35.209.60.37/' . $product_image . '?product_id=' . $product_id;
                 ?>
                     <tr class='text-center'>
                         <td><?php echo $product_id; ?></td>
                         <td><?php echo $product_title; ?></td>
-                        <td><img src="<?php echo $product_image; ?>" alt="<?php echo $product_image; ?>" width="40" height="40"></td>
-
-
+                        <td><img src="<?php echo $image_url; ?>" alt="<?php echo $product_image; ?>" width="200" height="200"></td>
                         <td>$<?php echo $product_price; ?></td>
+                        <td><?php echo $quantity; ?></td>
                         <td><?php echo $status; ?></td>
+                        <td><?php echo $product_description; ?></td>
                         <td><a href='index.php?edit_products=<?php echo $product_id ?>' class='text-light'><i class='fa-solid fa-pen-to-square'></i></a></td>
                         <td><a href='index.php?delete_product=<?php echo $product_id ?>' class='text-light'><i class='fa-solid fa-trash'></i></a></td>
                     </tr>
