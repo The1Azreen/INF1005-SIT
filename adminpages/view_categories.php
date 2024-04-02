@@ -21,13 +21,7 @@ if ($conn->connect_error) {
 }
 
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-<body>
-
-<div class="container">
+<aside>
     <h3 class="text-center text-success">All Categories</h3>
     <table class="table table-bordered mt-5">
         <thead class="bg-info">
@@ -48,10 +42,14 @@ if ($conn->connect_error) {
                 $category_title = $row['category_title'];
                 $number++;
 
-            ?>
+                ?>
                 <tr class="text-center">
-                    <td><?php echo $number; ?></td>
-                    <td><?php echo $category_title; ?></td>
+                    <td>
+                        <?php echo $number; ?>
+                    </td>
+                    <td>
+                        <?php echo $category_title; ?>
+                    </td>
                     <td>
                         <a href='edit_category.php?category_id=<?php echo $category_id ?>' class='btn btn-warning'>
                             <i class='fa-solid fa-pen-to-square'></i> Edit
@@ -63,18 +61,13 @@ if ($conn->connect_error) {
                         </a>
                     </td>
                 </tr>
-            <?php
+                <?php
             } ?>
         </tbody>
     </table>
-</div>
+</aside>
 
 
-
-</body>
-</html>
-
-<?php
 // Close the database connection
-$conn->close();
+<?php $conn->close();
 ?>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 // Include database configuration
-include "adminpages/inc/header.inc.php";
+include "../inc/head.inc.php";
 $config = parse_ini_file('/var/www/private/db-config.ini');
 if (!$config) {
     die("Failed to read database config file.");
@@ -22,17 +22,12 @@ if ($conn->connect_error) {
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<body>
-
-<div class="container">
+<aside>
     <h3 class="text-center text-success">All Brands</h3>
     <table class="table table-bordered mt-5">
         <thead class="bg-info">
             <tr class="text-center">
-                <th>Serial number</th>
+                <th>Brand ID</th>
                 <th>Brand title</th>
                 <th>Edit</th>
                 <th>Delete</th>
@@ -48,23 +43,29 @@ if ($conn->connect_error) {
                 $brand_title = $row['brand_title'];
                 $number++;
 
-            ?>
+                ?>
                 <tr class="text-center">
-                    <td><?php echo $number; ?></td>
-                    <td><?php echo $brand_title; ?></td>
+                    <td>
+                        <?php echo $number; ?>
+                    </td>
+                    <td>
+                        <?php echo $brand_title; ?>
+                    </td>
                     <td>
                         <a href='edit_brands.php?brand_id=<?php echo $brand_id ?>' class='btn btn-warning'>
                             <i class='fa-solid fa-pen-to-square'></i> Edit
                         </a>
                     </td>
                     <td>
-                        <a href='#' class='btn btn-danger' data-toggle="modal" data-target="#exampleModal<?php echo $brand_id ?>">
+                        <a href='#' class='btn btn-danger' data-toggle="modal"
+                            data-target="#exampleModal<?php echo $brand_id ?>">
                             <i class='fa-solid fa-trash'></i> Delete
                         </a>
                     </td>
                 </tr>
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal<?php echo $brand_id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="exampleModal<?php echo $brand_id ?>" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-body">
@@ -72,19 +73,17 @@ if ($conn->connect_error) {
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                <a href='delete_brands.php?brand_id=<?php echo $brand_id ?>' class="btn btn-primary text-light">Yes</a>
+                                <a href='delete_brands.php?brand_id=<?php echo $brand_id ?>'
+                                    class="btn btn-primary text-light">Yes</a>
                             </div>
                         </div>
                     </div>
                 </div>
-            <?php
+                <?php
             } ?>
         </tbody>
     </table>
-</div>
-
-</body>
-</html>
+</aside>
 
 <?php
 // Close the database connection

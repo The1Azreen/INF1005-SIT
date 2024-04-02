@@ -18,7 +18,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
 if ($conn->connect_error) {
 
-  echo "Connected successfully<br>";
+    echo "Connected successfully<br>";
 }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -32,9 +32,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Insert successful
         echo '<script>alert("Insert successful");</script>';
 
- } else {
+    } else {
 
-// Error occurred
+        // Error occurred
         echo '<script>alert("Error occurred");</script>';
     }
 }
@@ -43,26 +43,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $conn->close();
 ?>
 
-<!-- HTML Form -->
-<div class="container">
-    <h3 class="text-center text-success">Insert Category</h3>
-    <form action="" method="post" class="mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="input-group mb-3">
-                    <span class="input-group-text bg-info" id="basic-addon1">
-                        <i class="fa-solid fa-receipt"></i>
-                    </span>
-                    <input type="text" class="form-control" name="cat_title" placeholder="Insert Category" aria-label="Category" aria-describedby="basic-addon1">
+<aside>
+    <!-- HTML Form -->
+    <div class="container">
+        <h3 class="text-center text-success">Insert Category</h3>
+        <form action="" method="post" class="mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-info" id="basic-addon1">
+                            <i class="fa-solid fa-receipt"></i>
+                        </span>
+                        <input type="text" class="form-control" name="cat_title" placeholder="Insert Category"
+                            aria-label="Category" aria-describedby="basic-addon1">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="input-group">
-                    <button type="submit" class="btn btn-info btn-block">Insert Category</button>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <button type="submit" class="btn btn-info btn-block">Insert Category</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
+    <br>
+</aside>

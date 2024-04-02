@@ -1,5 +1,6 @@
 <?php
 session_start();
+include "../inc/head.inc.php";
 //include "adminpages/inc/header.inc.php";
 // Include database configuration
 $config = parse_ini_file('/var/www/private/db-config.ini');
@@ -46,15 +47,7 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Page Title</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome CSS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-</head>
+
 <body>
     
     <div class="container">
@@ -81,8 +74,6 @@ $conn->close();
         </form>
     </div>
 
-    <!-- Bootstrap JS (optional, only if you need Bootstrap JS functionalities) -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
 
