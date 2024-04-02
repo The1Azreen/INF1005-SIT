@@ -1,29 +1,21 @@
-<!-- <?php
-      ini_set('display_errors', 1);
-      ini_set('display_startup_errors', 1);
-      error_reporting(E_ALL);
-      ?>
 <?php
-var_dump($_GET);
-?> -->
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-<?php
 session_start(); // Start the session
 $productId = isset($_GET['product_id']) ? $_GET['product_id'] : null; // Get the product id from the URL
+
 if ($productId !== null) {
-  // getProduct($productId); // Call the function with the product id
-  $productId = intval($_GET['product_id']);
-  if ($productId <= 0) {
-    // Handle the case when product_id is not a valid integer
-    echo "Invalid product ID.";
-  }
+  getProduct($productId); // Call the function with the product id
 } else {
   echo "Product ID is not set.";
   exit;
 }
+
 function getProduct($productId)
 {
-  global $productId, $productName, $price, $desc, $image_path, $errorMsg, $success;
+  global $productName, $price, $desc, $image_path, $errorMsg, $success;
 
   // Create database connection.
   $config = parse_ini_file('/var/www/private/db-config.ini');
@@ -37,34 +29,35 @@ function getProduct($productId)
       $config['password'],
       $config['dbname']
     );
+
     // Check connection
     if ($conn->connect_error) {
       $errorMsg = "Connection failed: " . $conn->connect_error;
       $success = false;
     } else {
-      $stmt = $conn->prepare("SELECT * FROM products WHERE product_id = ?");
+      $stmt = $conn->prepare("SELECT product_name, price, product_description, CONCAT('images/ProductImages/', image) AS image_path FROM products WHERE product_id = ?");
       if (!$stmt) {
         throw new Exception("Failed to prepare statement: " . $conn->error);
       }
+
       $stmt->bind_param("i", $productId);
-      if (!$stmt->bind_param("i", $productId)) {
-        throw new Exception("Failed to bind parameters: " . $stmt->error);
-      }
-      $stmt->execute();
+
       if (!$stmt->execute()) {
         throw new Exception("Failed to execute statement: " . $stmt->error);
       }
+
       $result = $stmt->get_result();
+
       if ($result->num_rows > 0) {
         $product = $result->fetch_assoc();
-        $productId = $product['product_id'];
         $productName = $product['product_name'];
         $price = $product['price'];
         $desc = $product['product_description'];
-        $image_path = $product['filePath'];
+        $image_path = $product['image_path'];
       } else {
         echo 'This product is not available.';
       }
+
       $stmt->close();
       $conn->close();
     }
@@ -75,16 +68,8 @@ function getProduct($productId)
 <html lang="en">
 
 <head>
-  <?php
-  // Call the getProduct function to retrieve the product details
-  getProduct($productId);
-  ?>
-  
   <title><?php echo $productName; ?> | CircuitCart</title>
-  <?php
-  // Include head.inc.php for the <head> section
-  include "inc/head.inc.php";
-  ?>
+  <?php include "inc/head.inc.php"; ?>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.*/dist/css/bootstrap.min.css">
   <style>
     /* Add custom styles here if needed */
