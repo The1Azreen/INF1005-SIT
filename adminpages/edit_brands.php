@@ -1,44 +1,28 @@
 <?php
 session_start();
-//include "adminpages/inc/header.inc.php";
-// Include database configuration
 $config = parse_ini_file('/var/www/private/db-config.ini');
 if (!$config) {
     die("Failed to read database config file.");
 }
 
-// Establish connection to the database
-$servername = $config['servername'];
-$username = $config['username'];
-$password = $config['password'];
-$dbname = $config['dbname'];
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
+$conn = new mysqli($config['servername'], $config['username'], $config['password'], $config['dbname']);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if form is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve brand title and ID from the form
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['brand_id'], $_POST['new_brand_title'])) {
     $brand_id = $_POST['brand_id'];
     $new_brand_title = $_POST['new_brand_title'];
 
-    // Prepare SQL statement to update brand title in the database
-    $sql = "UPDATE brands SET brand_title='$new_brand_title' WHERE brand_id=$brand_id";
-
-    if ($conn->query($sql) === TRUE) {
-        // Update successful
+    $stmt = $conn->prepare("UPDATE brands SET brand_title = ? WHERE brand_id = ?");
+    $stmt->bind_param("si", $new_brand_title, $brand_id);
+    if ($stmt->execute()) {
         echo '<script>alert("Brand updated successfully"); window.location.href = "index.php?view_brands";</script>';
     } else {
-        // Error occurred
         echo '<script>alert("Error occurred while updating brand"); window.location.href = "index.php?view_brands";</script>';
     }
+    $stmt->close();
 }
-
-// Close the database connection
 $conn->close();
 ?>
 
