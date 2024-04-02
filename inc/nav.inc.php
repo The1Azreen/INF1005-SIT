@@ -22,7 +22,7 @@ if (isset ($_SESSION['cart']) && !empty ($_SESSION['cart'])) {
 
 ?>
 
-<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top" style="z-index: 500;">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
             <img src="images/circuitcart-logo.png" alt="Logo" height="50em">
@@ -42,6 +42,12 @@ if (isset ($_SESSION['cart']) && !empty ($_SESSION['cart'])) {
                 <li class="nav-item">
                     <a class="nav-link" href="product.php">Products</a>
                 </li>
+                <?php if (strcmp($_SESSION['type'], "true") == 0) {
+                    ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="adminpages/index.php">Admin</a>
+                    </li>
+                <?php } ?>
             </ul>
 
         </div>
