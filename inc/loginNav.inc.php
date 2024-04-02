@@ -45,7 +45,7 @@ if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
                 <?php if (strcmp($_SESSION['type'], "true") == 0) {
                     ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="adminPlaceholder.php">Admin</a>
+                        <a class="nav-link" href="adminpages/index.php">Admin</a>
                     </li>
                 <?php } ?>
             </ul>
