@@ -1,7 +1,7 @@
 <?php
 session_start();
 // Include database configuration
-include "adminpages/inc/header.inc.php";
+include "../inc/head.inc.php";
 $config = parse_ini_file('/var/www/private/db-config.ini');
 if (!$config) {
     die("Failed to read database config file.");
