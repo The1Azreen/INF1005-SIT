@@ -51,7 +51,7 @@
                     <?php echo '$' . number_format($totalPrice, 2); ?>
                 </p>
                 <br>
-                <?php if (isset($_SESSION['user_id'])) { ?>
+                <?php if (isset($_SESSION['member_id'])) { ?>
                     <div><a href="checkout.php" class="btn btn-primary btn-block">Checkout</a></div>
                 <?php } else { ?>
                     <p>Please log in to proceed to checkout.</p>
