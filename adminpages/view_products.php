@@ -14,13 +14,11 @@ if ($con->connect_error) {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <title>All Products</title>
     <!-- Include necessary CSS/JS libraries -->
     <?php include "adminpages/inc/head.inc.php"; ?>
 </head>
-
 <body>
 
     <main class="container">
@@ -33,7 +31,7 @@ if ($con->connect_error) {
                     <th>Product Image</th>
                     <th>Product Price</th>
                     <th>Quantity</th>
-                    <th>Status</th>
+               
                     <th>Description</th>
                     <th>Edit</th>
                     <th>Delete</th>
@@ -41,29 +39,29 @@ if ($con->connect_error) {
             </thead>
             <tbody class="bg-secondary text-light">
                 <?php
-                $get_products = "SELECT * FROM `products`";
-                $result = mysqli_query($con, $get_products);
-                $number = 0;
-                while ($row = mysqli_fetch_assoc($result)) {
+                // Prepared statement for selecting products
+                $stmt = $con->prepare("SELECT * FROM `products`");
+                $stmt->execute();
+                $result = $stmt->get_result();
+                while ($row = $result->fetch_assoc()) {
                     $product_id = $row['product_id'];
                     $product_title = $row['product_name'];
                     $product_image = $row['filePath']; 
                     $product_price = $row['price'];
                     $quantity = $row['quantity'];
-                    $status = $row['status'];
+                  
                     $product_description = $row['product_description'];
-                    $number++;
                     // Construct the complete image URL with the product_id parameter
                     $image_url = 'http://35.209.60.37/' . $product_image . '?product_id=' . $product_id;
                 ?>
                     <tr class='text-center'>
-                        <td><?php echo $product_id; ?></td>
-                        <td><?php echo $product_title; ?></td>
-                        <td><img src="<?php echo $image_url; ?>" alt="<?php echo $product_image; ?>" width="200" height="200"></td>
-                        <td>$<?php echo $product_price; ?></td>
-                        <td><?php echo $quantity; ?></td>
-                        <td><?php echo $status; ?></td>
-                        <td><?php echo $product_description; ?></td>
+                        <td><?php echo htmlspecialchars($product_id); ?></td>
+                        <td><?php echo htmlspecialchars($product_title); ?></td>
+                        <td><img src="<?php echo htmlspecialchars($image_url); ?>" alt="Product Image" width="200" height="200"></td>
+                        <td>$<?php echo htmlspecialchars($product_price); ?></td>
+                        <td><?php echo htmlspecialchars($quantity); ?></td>
+                       
+                        <td><?php echo htmlspecialchars($product_description); ?></td>
                         <td><a href='index.php?edit_products=<?php echo $product_id ?>' class='text-light'><i class='fa-solid fa-pen-to-square'></i></a></td>
                         <td><a href='index.php?delete_product=<?php echo $product_id ?>' class='text-light'><i class='fa-solid fa-trash'></i></a></td>
                     </tr>
@@ -76,7 +74,6 @@ if ($con->connect_error) {
 
     <?php include "adminpages/inc/footer.inc.php"; ?>
 </body>
-
 </html>
 
 <?php
