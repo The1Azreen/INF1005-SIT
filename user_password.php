@@ -13,21 +13,23 @@ session_start();
 
 <body>
     <?php
-    include "inc/loginNav.inc.php";
+    include "inc/nav.inc.php";
     ?>
     <br>
-     <main class="container">
+    <main class="container">
         <div class="row">
             <div class="col-md-6">
                 <h2>Update Password</h2>
                 <form action="process_password.php" method="POST">
                     <div class="mb-3">
                         <label class="fo rm-label" for="pass">Password:</label>
-                        <input required class="form-control" type="password" id="pass" name="pass" placeholder="Enter password">
+                        <input required class="form-control" type="password" id="pass" name="pass"
+                            placeholder="Enter password">
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="pass_confirm">Confirm Password:</label>
-                        <input required class="form-control" type="password" id="pass_confirm" name="pass_confirm" placeholder="Confirm password">
+                        <input required class="form-control" type="password" id="pass_confirm" name="pass_confirm"
+                            placeholder="Confirm password">
                     </div>
                     <br>
                     <button type="submit" class="btn btn-primary">Update Password</button>

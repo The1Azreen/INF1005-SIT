@@ -14,11 +14,7 @@ session_start(); // Start the session
 
 <body>
     <?php // Check if user is login or not
-    if (isset($_SESSION["user"]) == "") {
         include "inc/nav.inc.php";
-    } else {
-        include "inc/loginNav.inc.php";
-    }
     ?>
     <main class="container">
         <!--BIG CAROUSELL-->
@@ -59,11 +55,12 @@ session_start(); // Start the session
                 <!--ARROWS-->
             </div>
         </section>
-
+        <br>
         <section id="flash_deals">
             <div class="flash-deals-container">
                 <div class="container-fluid bg-3 text-center">
                     <h3 class="text-center">FLASH DEALS</h3>
+                    <br>
                     <div id="flashDealsCarousel" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
                             <?php
@@ -133,8 +130,10 @@ session_start(); // Start the session
             </div>
         </section>
 
+
     </main>
 
+    <br>
 
     <?php
     // Include footer.inc.php for the footer section

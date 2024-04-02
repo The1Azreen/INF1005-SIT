@@ -62,12 +62,7 @@ function getProducts()
 
 <body>
     <?php
-    if (isset($_SESSION["user"]) == "") {
         include "inc/nav.inc.php";
-    } else {
-        include "inc/loginNav.inc.php";
-    }
-
     ?>
     <div class="table-responsive">
         <table class="table">
@@ -102,13 +97,10 @@ function getProducts()
                 echo '</a>';
                 echo '</div>';
                 echo '<div class="product-info" style="text-align: center;">';
-                echo '<h2 class="product-title">' . $product['name'] . '</h2>';
-                echo '<p class="product-price">' . $product['price'] . '</p>';
+                echo '<h2 class="product-title">' . $products['name'] . '</h2>';
+                echo '<p class="product-price">' . $products['price'] . '</p>';
                 /* echo '<p class="product-description">' . $product['description'] . '</p>'; */
-                if (isset($_SESSION["user"]) && $_SESSION["user"] != "") {
-                    echo '<button class="btn btn-primary" style="text-align: center;" onclick="addToCart(' . $product['product_id'] . ', \'' . $product['name'] . '\', ' . $product['price'] . ')">Add to Cart</button>';
 
-                }
                 echo '<button class="btn btn-primary" style="text-align: center;" onclick="addToCart(' . $product['product_id'] . ', \'' . $product['name'] . '\', ' . $product['price'] . ')">Add to Cart</button>';
                 echo '</div>';
                 echo '</div>';
@@ -143,9 +135,9 @@ function getProducts()
             formData.append('price', price);
 
             fetch('add_to_cart.php', {
-                    method: 'POST',
-                    body: formData
-                })
+                method: 'POST',
+                body: formData
+            })
                 .then(response => response.text())
                 .then(data => {
                     alert(data); // Show response from server

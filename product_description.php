@@ -1,11 +1,11 @@
-<!-- <?php
-      ini_set('display_errors', 1);
-      ini_set('display_startup_errors', 1);
-      error_reporting(E_ALL);
-      ?>
+<?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+?>
 <?php
 var_dump($_GET);
-?> -->
+?>
 
 <?php
 session_start(); // Start the session
@@ -13,6 +13,7 @@ $productId = isset($_GET['product_id']) ? $_GET['product_id'] : null; // Get the
 if ($productId !== null) {
   // getProduct($productId); // Call the function with the product id
   $productId = intval($_GET['product_id']);
+  echo "this is working";
   if ($productId <= 0) {
     // Handle the case when product_id is not a valid integer
     echo "Invalid product ID.";
@@ -75,12 +76,7 @@ function getProduct($productId)
 <html lang="en">
 
 <head>
-  <?php
-  // Call the getProduct function to retrieve the product details
-  getProduct($productId);
-  ?>
-  
-  <title><?php echo $productName; ?> | CircuitCart</title>
+  <title>Dell Alienware AW3225QF | CircuitCart</title>
   <?php
   // Include head.inc.php for the <head> section
   include "inc/head.inc.php";
@@ -92,11 +88,15 @@ function getProduct($productId)
 </head>
 
 <body>
+  <?php
+  // Call the getProduct function to retrieve the product details
+  getProduct($productId);
+  ?>
   <!-- Navigation menu inclusion -->
   <?php include "inc/nav.inc.php"; ?>
 
   <!-- Main Content -->
-  <div class="container mt-5">
+  <div class="container mt-5" aria-label="Product details for Dell Alienware AW3225QF">
     <div class="row">
       <!-- Product Description Column -->
       <div class="col-md-6">
@@ -111,10 +111,11 @@ function getProduct($productId)
 
       <!-- Product Image Column -->
       <div class="col-md-6">
-        <img src="<?php echo $image_path ?>" alt="<?php echo $productName ?>" class="img-fluid">
+        <img src="<?php echo $image_path ?>" alt="Image of Dell Alienware AW3225QF" class="img-fluid" aria-label="Image of Dell Alienware AW3225QF">
       </div>
     </div>
   </div>
+  <br>
 
   <!-- Footer section inclusion -->
   <?php include "inc/footer.inc.php"; ?>

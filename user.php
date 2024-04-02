@@ -103,7 +103,7 @@ function getMemberOrder()
 
 <body>
     <?php
-    include "inc/loginNav.inc.php";
+        include "inc/loginNav.inc.php";
     ?>
     <br>
     <main class="container">
