@@ -11,8 +11,7 @@ if ($con->connect_error) {
     die("Connection failed: " . $con->connect_error);
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
+
 <aside>
     <h3 class="text-center text-success">All Products</h3>
     <table class="table table-bordered mt-5">
