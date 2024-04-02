@@ -213,8 +213,7 @@ td {
   height: 100%;
   width: 0;
   position: fixed;
-  z-index: 1000;
-  ;
+  z-index: 9999;
   top: 0;
   right: 0;
   background-color: #fafafa;
@@ -305,6 +304,7 @@ main {
   background-color: #fafafa;
   /* Updated color */
   border-bottom: solid;
+  
 }
 
 footer {
