@@ -74,9 +74,9 @@ if ($conn->connect_error) {
 
                         // Only include dropdown for acc_type if it's not the first row
                         if ($member_id > 1) {
-                            echo "<select class='form-control' name='acc_type' onchange='updateAccType($member_id, this.value)'>";
-                            echo "<option value='true' " . ($acc_type == 'true' ? 'selected' : '') . ">true</option>";
-                            echo "<option value='false' " . ($acc_type == 'false' ? 'selected' : '') . ">false</option>";
+                            echo "<select class='form-control' name='acc_type'>";
+                            echo "<option value='true' " . ($acc_type == 'true' ? 'selected' : '') . ">True</option>";
+                            echo "<option value='false' " . ($acc_type == 'false' ? 'selected' : '') . ">False</option>";
                             echo "</select>";
                         } else {
                             // For the first row, just display the acc_type without dropdown
@@ -126,19 +126,6 @@ if ($conn->connect_error) {
     </main>
 
     <?php include "adminpages/inc/footer.inc.php"; ?>
-    <script>
-        function updateAccType(member_id, acc_type) {
-            // Send AJAX request to update acc_type in the database
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    console.log("Acc type updated for member ID: " + member_id);
-                }
-            };
-            xhttp.open("GET", "update_acctype.php?member_id=" + member_id + "&acc_type=" + acc_type, true);
-            xhttp.send();
-        }
-    </script>
 </body>
 
 </html>
