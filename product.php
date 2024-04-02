@@ -106,9 +106,10 @@ function getProducts()
                 echo '<p class="product-price">' . $product['price'] . '</p>';
                 /* echo '<p class="product-description">' . $product['description'] . '</p>'; */
                 if (isset($_SESSION["user"]) && $_SESSION["user"] != "") {
-                    echo '<button class="btn btn-primary" style="text-align: center;" onclick="addToCart(' . $product['product_id'] . ', \'' . $product['product_name'] . '\', ' . $product['price'] . ')">Add to Cart</button>';
+                    echo '<button class="btn btn-primary" style="text-align: center;" onclick="addToCart(' . $product['product_id'] . ', \'' . $product['name'] . '\', ' . $product['price'] . ')">Add to Cart</button>';
+
                 }
-                echo '<button class="btn btn-primary" style="text-align: center;" onclick="addToCart(' . $product['product_id'] . ', \'' . $product['product_name'] . '\', ' . $product['price'] . ')">Add to Cart</button>';
+                echo '<button class="btn btn-primary" style="text-align: center;" onclick="addToCart(' . $product['product_id'] . ', \'' . $product['name'] . '\', ' . $product['price'] . ')">Add to Cart</button>';
                 echo '</div>';
                 echo '</div>';
                 echo '</td>';
