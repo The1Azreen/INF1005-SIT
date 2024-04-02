@@ -77,7 +77,7 @@ function saveOrder()
 </head>
 
 <body>
-    <?php include "inc/loginNav.inc.php"; ?>
+    <?php include "inc/nav.inc.php"; ?>
     <main class="container">
         <div>
             <?php

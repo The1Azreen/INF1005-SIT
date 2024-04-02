@@ -71,7 +71,7 @@ function updatepassword()
 
 <body>
     <?php
-    include "inc/loginNav.inc.php";
+    include "inc/nav.inc.php";
     ?>
     <main class="container">
         <div>
