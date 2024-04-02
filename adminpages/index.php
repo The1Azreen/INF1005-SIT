@@ -29,7 +29,7 @@
                     <a href="index.php?list_orders" class="btn btn-info mx-2 my-1">All Orders</a>
                     <a href="index.php?list_payments" class="btn btn-info mx-2 my-1">All Payments</a>
                     <a href="index.php?list_users" class="btn btn-info mx-2 my-1">List Users</a>
-                    <a href="/index.php" class="btn btn-info mx-2 my-1">Logout</a>
+                    <a href="/index.php" class="btn btn-info mx-2 my-1">Return to Main</a>
                 </div>
             </div>
         </div>
