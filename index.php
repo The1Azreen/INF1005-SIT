@@ -4,17 +4,15 @@ session_start(); // Start the session
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
     <?php
     include "inc/head.inc.php";
     ?>
 </head>
 
-
 <body>
     <?php // Check if user is login or not
-        include "inc/nav.inc.php";
+    include "inc/nav.inc.php";
     ?>
     <main class="container">
         <!--BIG CAROUSELL-->
@@ -31,7 +29,7 @@ session_start(); // Start the session
                     <div class="carousel-item active">
                         <img class="d-block w-100" src="images/Banners/hugo-agut-tugal-6cdIdu8KkLg-unsplash.jpg" alt="First slide">
                         <div class="carousel-caption d-none d-md-block text-center">
-                            <h5>BUY NOW</h>
+                            <h5>BUY NOW</h5>
                         </div>
                     </div>
 
@@ -64,17 +62,22 @@ session_start(); // Start the session
                     <div id="flashDealsCarousel" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
                             <?php
-                            $flashDeals = [
-                                ["images/flash_deals/black_digital_camera.jpeg?product_id=1001", "Black Digital Camera"],
-                                ["images/flash_deals/silver_laptop.jpeg?product_id=1002", "Silver Laptop"],
-                                ["images/flash_deals/fitness_tracker.jpeg", "Fitness Tracker"],
-                                ["images/flash_deals/smart_speaker.jpeg", "Smart Speaker"],
-                                ["images/flash_deals/wireless_headset.jpeg", "Wireless Headset"]
-                            ];
+                            // Fetch latest products from the database
+                            $config = parse_ini_file('/var/www/private/db-config.ini');
+                            if (!$config) {
+                                die("Failed to read database config file.");
+                            }
 
+                            $con = new mysqli($config['servername'], $config['username'], $config['password'], $config['dbname']);
+                            if ($con->connect_error) {
+                                die("Connection failed: " . $con->connect_error);
+                            }
 
+                            $stmt = $con->prepare("SELECT * FROM products ORDER BY product_id DESC LIMIT 5"); // Assuming you want to display the latest 5 products
+                            $stmt->execute();
+                            $result = $stmt->get_result();
 
-                            $numSlides = ceil(count($flashDeals) / 4); // Calculate the number of slides
+                            $numSlides = ceil($result->num_rows / 4);
 
                             for ($i = 0; $i < $numSlides; $i++) {
                                 $activeClass = ($i === 0) ? "active" : "";
@@ -83,36 +86,28 @@ session_start(); // Start the session
                             <?php } ?>
                         </ol>
                         <div class="carousel-inner">
-                            <?php for ($i = 0; $i < $numSlides; $i++) {
-                                $activeClass = ($i === 0) ? "active" : "";
+                            <?php
+                            $counter = 0;
+                            while ($row = $result->fetch_assoc()) {
+                                if ($counter % 4 == 0) {
+                                    echo '<div class="carousel-item' . (($counter == 0) ? " active" : "") . '">';
+                                    echo '<div class="row">';
+                                }
+                                $image_url = 'http://35.209.60.37/' . $row['filePath'] . '?product_id=' . $row['product_id'];
                             ?>
-                                <div class="carousel-item <?php echo $activeClass; ?>">
-                                    <div class="row">
-                                        <!-- <?php for ($j = $i * 4; $j < min(($i + 1) * 4, count($flashDeals)); $j++) {
-                                                    $deal = $flashDeals[$j];
-                                                ?>
-                                            <div class="col-sm-3">
-                                                <a href="product_description.php?">
-                                                    <img src="<?php echo $deal[0]; ?>" class="img-responsive product-image" style="width:70%" alt="<?php echo $deal[1]; ?>">
-                                                </a>
-                                            </div>
-                                        <?php } ?> -->
-                                        <?php for ($j = $i * 4; $j < min(($i + 1) * 4, count($flashDeals)); $j++) {
-                                            $deal = $flashDeals[$j];
-                                            $url = $deal[0];
-                                            $query = parse_url($url, PHP_URL_QUERY);
-                                            parse_str($query, $params);
-                                            $productId = $params['product_id'];
-                                        ?>
-                                            <div class="col-sm-3">
-                                                <a href="product_description.php?product_id=<?php echo $productId; ?>">
-                                                    <img src="<?php echo $deal[0]; ?>" class="img-responsive product-image" style="width:70%" alt="<?php echo $deal[1]; ?>">
-                                                </a>
-                                            </div>
-                                        <?php } ?>
-                                    </div>
+                                <div class="col-sm-3">
+                                    <a href="product_description.php?product_id=<?php echo $row['product_id']; ?>">
+                                        <img src="<?php echo $image_url; ?>" class="img-responsive product-image" style="width:70%" alt="<?php echo $row['product_name']; ?>">
+                                    </a>
                                 </div>
-                            <?php } ?>
+                            <?php
+                                $counter++;
+                                if ($counter % 4 == 0 || $counter == $result->num_rows) {
+                                    echo '</div>';
+                                    echo '</div>';
+                                }
+                            }
+                            ?>
                         </div>
                         <div class="carousel-control">
                             <a class="carousel-control-prev" href="#flashDealsCarousel" role="button" data-slide="prev" style="width: 5%;">
@@ -124,15 +119,11 @@ session_start(); // Start the session
                                 <span class="sr-only">Next</span>
                             </a>
                         </div>
-
                     </div>
                 </div>
             </div>
         </section>
-
-
     </main>
-
     <br>
 
     <?php
