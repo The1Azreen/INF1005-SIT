@@ -46,11 +46,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($conn->query($sql) === TRUE) {
         // Insert successful
         echo '<script>alert("Product inserted successfully");</script>';
-        header("Location: index.php");
+        header("Location: index.php?view_products");
     } else {
         // Error occurred
         echo '<script>alert("Error occurred");</script>';
-        header("Location: index.php");
+        header("Location: index.php?view_products");
     }
 }
 

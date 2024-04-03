@@ -73,7 +73,7 @@ session_start(); // Start the session
                                 die("Connection failed: " . $con->connect_error);
                             }
 
-                            $stmt = $con->prepare("SELECT * FROM products ORDER BY product_id DESC LIMIT 8"); // Limit query to 8 latest products
+                            $stmt = $con->prepare("SELECT * FROM products WHERE filePath IS NOT NULL AND filePath != '' ORDER BY product_id DESC LIMIT 8"); // Limit query to 8 latest products
                             $stmt->execute();
                             $result = $stmt->get_result();
 

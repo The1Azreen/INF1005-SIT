@@ -1,12 +1,16 @@
 <?php
+session_start();
+
 // Include database configuration
+include "adminpages/inc/header.inc.php";
+
 // Check if the 'type' session variable is set to "true"
-if (!isset($_SESSION['type']) || strcmp($_SESSION['type'], "true") !== 0) {
+if (!isset($_SESSION['type']) || $_SESSION['type'] !== "true") {
     // If not admin, redirect to main index or login page
     header('Location: /index.php');
     exit();
 }
-include "adminpages/inc/header.inc.php";
+
 $config = parse_ini_file('/var/www/private/db-config.ini');
 if (!$config) {
     die("Failed to read database config file.");
@@ -31,32 +35,36 @@ if (isset($_GET['member_id']) && filter_var($_GET['member_id'], FILTER_VALIDATE_
         // Execute the delete statement
         if ($stmt_delete->execute()) {
             // Update member IDs
-            $result_update = $conn->query("SELECT member_id FROM members");
+            $stmt_update = $conn->prepare("UPDATE members SET member_id = ? WHERE member_id = ?");
             $new_member_id = 1;
+            $stmt_update->bind_param("ii", $new_member_id, $old_member_id);
+            $result_update = $conn->query("SELECT member_id FROM members");
             while ($row = $result_update->fetch_assoc()) {
                 $old_member_id = $row['member_id'];
                 if ($old_member_id != $member_id) {
-                    $sql_update = "UPDATE members SET member_id = $new_member_id WHERE member_id = $old_member_id";
-                    $conn->query($sql_update);
+                    $stmt_update->execute();
                     $new_member_id++;
                 }
             }
-            echo '<script>alert("Account deleted successfully."); window.location.href = "index.php?list_users";</script>';
-            exit(); // Terminate script
+            $stmt_update->close();
+            
+            // Redirect with success message
+            header("Location: index.php?list_users&success=Account deleted successfully.");
+            exit();
         } else {
-            // Handle error if deletion fails
-            echo '<script>alert("Account deletion failed."); window.location.href = "index.php?list_users";</script>';
-            exit(); // Terminate script
+            // Redirect with error message
+            header("Location: index.php?list_users&error=Account deletion failed.");
+            exit();
         }
     } else {
-        // If member_id is the first one, do not allow deletion
-        echo "Cannot delete the first member.";
-        exit(); // Terminate script
+        // If member_id is the first one, redirect with error message
+        header("Location: index.php?list_users&error=Cannot delete the first member.");
+        exit();
     }
 } else {
-    // If member_id is not set or not a valid integer, show an error
-    echo "Invalid member ID.";
-    exit(); // Terminate script
+    // If member_id is not set or not a valid integer, redirect with error message
+    header("Location: index.php?list_users&error=Invalid member ID.");
+    exit();
 }
 
 // Close the database connection

@@ -37,7 +37,7 @@ if ($conn->connect_error) {
                 <th>Last Name</th>
                 <th>Email</th>
                 <th>Account Type</th>
-               
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody class='bg-secondary text-light'>
@@ -75,7 +75,9 @@ if ($conn->connect_error) {
                     }
                     echo "</td>
                           <td>";
-                    // Delete button logic (if applicable) would go here
+                    if ($member_id > 1) { // Only show delete button for members except member_id = 1
+                        echo "<button class='btn btn-danger delete-button' data-member-id='{$member_id}'>Delete</button>";
+                    }
                     echo "</td>
                           </tr>";
                 }
@@ -86,13 +88,48 @@ if ($conn->connect_error) {
     </table>
 </aside>
 
-<!-- Additional content like modals would go here -->
+<!-- Delete Confirmation Modal -->
+<div id="confirmModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this user?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="delete-confirm">Yes, Delete It</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!-- Script for Delete Confirmation Modal -->
 <script>
-// Include any JavaScript here
+document.addEventListener('DOMContentLoaded', function () {
+    var deleteButtons = document.querySelectorAll('.delete-button');
+    var confirmDeleteButton = document.getElementById('delete-confirm');
+    var memberIDToDelete;
+
+    deleteButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+            memberIDToDelete = this.getAttribute('data-member-id');
+            $('#confirmModal').modal('show');
+        });
+    });
+
+    confirmDeleteButton.addEventListener('click', function () {
+        // Redirect to delete script with member ID parameter
+        window.location.href = 'delete_account.php?member_id=' + memberIDToDelete;
+    });
+});
 </script>
 
 <?php $conn->close(); ?>
-
 </body>
 </html>
