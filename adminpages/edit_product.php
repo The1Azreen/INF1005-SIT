@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $product_description = $_POST['product_description'];
 
     // Prepare SQL statement to update product details in the database
-    $stmt = $con->prepare("UPDATE products SET product_name=?, price=?, qty=?, description=? WHERE product_id=?");
+    $stmt = $con->prepare("UPDATE products SET product_name=?, price=?, quantity=?, product_description=? WHERE product_id=?");
     $stmt->bind_param("ssisi", $product_title, $product_price, $quantity, $product_description, $product_id);
 
     if ($stmt->execute()) {
@@ -45,8 +45,8 @@ if (isset($_GET['product_id'])) {
     $product_title = $row['product_name'];
     $product_image = $row['filePath'];
     $product_price = $row['price'];
-    $quantity = $row['qty'];
-    $product_description = $row['description'];
+    $quantity = $row['quantity'];
+    $product_description = $row['product_description'];
 } else {
     // Redirect to products page if product ID is not provided
     header("Location: ../adminpages/index.php");

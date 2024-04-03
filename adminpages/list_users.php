@@ -12,45 +12,35 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>All Users</title>
-   
-    <?php include "adminpages/inc/head.inc.php"; ?>
-</head>
-<body>
-
-    <main class="container">
-        <h3 class="text-center text-success">All Users</h3>
-        <table class="table table-bordered mt-5">
-            <thead class="bg-info">
-                <tr class="text-center">
-                    <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Email</th>
-                    <th>Account Type</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody class='bg-secondary text-light'>
-                <?php
-                $stmt = $conn->prepare("SELECT * FROM members");
-                $stmt->execute();
-                $result = $stmt->get_result();
-                if ($result->num_rows == 0) {
-                    echo "<tr><td colspan='6' class='text-center'>No users yet</td></tr>";
-                } else {
-                    $members = $result->fetch_all(MYSQLI_ASSOC);
-                    foreach ($members as $row) {
-                        $member_id = htmlspecialchars($row['member_id']);
-                        $fname = htmlspecialchars($row['fname']);
-                        $lname = htmlspecialchars($row['lname']);
-                        $email = htmlspecialchars($row['email']);
-                        $acc_type = htmlspecialchars($row['acc_type']);
-                        echo "<tr>
+<aside>
+    <h3 class="text-center text-success">All Users</h3>
+    <table class="table table-bordered mt-5">
+        <thead class="bg-info">
+            <tr class="text-center">
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Account Type</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody class='bg-secondary text-light'>
+            <?php
+            $stmt = $conn->prepare("SELECT * FROM members");
+            $stmt->execute();
+            $result = $stmt->get_result();
+            if ($result->num_rows == 0) {
+                echo "<tr><td colspan='6' class='text-center'>No users yet</td></tr>";
+            } else {
+                $members = $result->fetch_all(MYSQLI_ASSOC);
+                foreach ($members as $row) {
+                    $member_id = htmlspecialchars($row['member_id']);
+                    $fname = htmlspecialchars($row['fname']);
+                    $lname = htmlspecialchars($row['lname']);
+                    $email = htmlspecialchars($row['email']);
+                    $acc_type = htmlspecialchars($row['acc_type']);
+                    echo "<tr>
                                 <td>{$member_id}</td>
                                 <td>{$fname}</td>
                                 <td>{$lname}</td>

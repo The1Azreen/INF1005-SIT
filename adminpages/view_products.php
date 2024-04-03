@@ -70,8 +70,6 @@ if ($con->connect_error) {
     </table>
 </aside>
 
-</html>
-
 <?php
 // Close the database connection
 $con->close();

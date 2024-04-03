@@ -62,14 +62,14 @@ if ($con->connect_error) {
             ?>
         </tbody>
     </table>
-</aside>
-<script>
-    function updateStatus(selectElement, orderId) {
-        var status = selectElement.value;
-        document.getElementById('order_status_' + orderId).value = status;
+    <script>
+        function updateStatus(selectElement, orderId) {
+            var status = selectElement.value;
+            document.getElementById('order_status_' + orderId).value = status;
 
-    }</script>
-<?php
-// Close the database connection
-$conn->close();
-?>
+        }</script>
+    <?php
+    // Close the database connection
+    $conn->close();
+    ?>
+</aside>

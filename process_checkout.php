@@ -2,21 +2,19 @@
 session_start(); // Start the session
 
 
-global $errorMsg, $success, $insert;
+global $errorMsg, $success;
 $success = true;
 
 // Check if payment type is selected
 if (!isset ($_POST['payment'])) {
     $errorMsg = "Please select a payment type.";
     $success = false;
-    echo '<script>alert("Payment Error");</script>';
 }
 
 // Check if delivery address is set
 if (!isset ($_SESSION['address'])) {
     $errorMsg = "Please enter a delivery address.";
     $success = false;
-    echo '<script>alert("ddress Error");</script>';
 }
 /*
  * Helper function to save order and retrieve inserted data.
@@ -26,7 +24,6 @@ function saveOrder()
     $config = parse_ini_file('/var/www/private/db-config.ini');
     if (!$config) {
         $errorMsg = "Failed to read database config file.";
-        echo '<script>alert("DB Error");</script>';
         $success = false;
     }
     $conn = new mysqli(
@@ -38,33 +35,30 @@ function saveOrder()
     // Check connection
     if ($conn->connect_error) {
         $errorMsg = "Connection failed: " . $conn->connect_error;
-        echo '<script>alert("Connection Error");</script>';
         $success = false;
     } else {
         $status = "pending";
         // Prepare the statement:
-        $stmt = $conn->prepare("INSERT INTO orders (member_id, total_qty, total_price, payment_id, order_status, delivery_address) 
+        $stmt = $conn->prepare("INSERT INTO orders (total_qty, total_price, order_status, delivery_address, member_id, payment_id) 
                             VALUES (?, ?, ?, ?, ?, ?)");
         // Bind & execute the query statement:
-        $stmt->bind_param("ssssss", $_SESSION['memberid'], $_SESSION['totalQty'], $_SESSION['totalPrice'], $_POST['payment'], $status, $_SESSION['address']);
+        $stmt->bind_param("ssssss", $_SESSION['totalQty'], $_SESSION['totalPrice'], $status,  $_SESSION['address'],$_SESSION['memberid'], $_POST['payment']);
         $stmt->execute();
         if ($stmt->affected_rows > 0) {
             $success = true;
             // Insertion successful
             $order_id = $conn->insert_id;
-            // Rest of your code for retrieving inserted data
+            //Rest of your code for retrieving inserted data
             foreach ($_SESSION['cart'] as $key => $item) {
                 $product_id = $item['product_id'];
                 $qty = $item['quantity'];
                 $stmt = $conn->prepare("INSERT INTO order_products (product_id, order_id, qty) VALUES (?, ?, ?)");
                 $stmt->bind_param("iii",$product_id, $order_id,  $qty);
                 $stmt->execute();
-                echo '<script>alert("Sucess");</script>';
             }
         } else {
             $errorMsg = "Error with checkout, please try again later.";
             $success = false;
-            echo '<script>alert("Error");</script>';
         }
         $stmt->close();
     }
@@ -88,7 +82,6 @@ function saveOrder()
         <div>
             <?php
             if (saveOrder()) { ?>
-                  
                 <div class="message-page">
                     <h3><b>Order Confirmed!</b></h3>
                     <br>
