@@ -34,7 +34,8 @@ function getProducts()
                         'image' => $row['filePath'],
                         'name' => $row['product_name'],
                         'price' => $row['price'],
-                        'description' => $row['product_description']
+                        'description' => $row['product_description'],
+                        'quantity' => $row['quantity'] // Add quantity to the product array
                     ];
                 }
             } else {
@@ -101,7 +102,13 @@ function getProducts()
                 echo '<p class="product-price">' . $product['price'] . '</p>';
                 /* echo '<p class="product-description">' . $product['description'] . '</p>'; */
 
-                echo '<button class="btn btn-primary" style="text-align: center;" onclick="addToCart(' . $product['product_id'] . ', \'' . $product['name'] . '\', ' . $product['price'] . ')">Add to Cart</button>';
+                // Check if quantity is greater than 0, if so, render the button
+                if ($product['quantity'] > 0) {
+                    echo '<button class="btn btn-primary" style="text-align: center;" onclick="addToCart(' . $product['product_id'] . ', \'' . $product['name'] . '\', ' . $product['price'] . ')">Add to Cart</button>';
+                } else {
+                    echo '<button class="btn btn-secondary" style="text-align: center;" disabled>Add to Cart</button>';
+                }
+                
                 echo '</div>';
                 echo '</div>';
                 echo '</td>';
