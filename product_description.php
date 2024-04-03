@@ -1,10 +1,8 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+
 ?>
 <?php
-var_dump($_GET);
+
 ?>
 
 <?php
@@ -13,7 +11,7 @@ $productId = isset($_GET['product_id']) ? $_GET['product_id'] : null; // Get the
 if ($productId !== null) {
   // getProduct($productId); // Call the function with the product id
   $productId = intval($_GET['product_id']);
-  echo "this is working";
+ 
   if ($productId <= 0) {
     // Handle the case when product_id is not a valid integer
     echo "Invalid product ID.";
@@ -106,7 +104,7 @@ function getProduct($productId)
         <div class="alert alert-warning" role="alert">
           Note: A cancellation fee will apply. Cancellation fees may differ depending on your region.
         </div>
-        <a href="/cart.php" class="btn btn-primary" role="button">Add to Cart</a>
+        <button class="btn btn-primary" onclick="addToCart(<?php echo $productId; ?>, '<?php echo $productName; ?>', <?php echo $price; ?>)">Add to Cart</button>
       </div>
 
       <!-- Product Image Column -->
@@ -120,6 +118,27 @@ function getProduct($productId)
   <!-- Footer section inclusion -->
   <?php include "inc/footer.inc.php"; ?>
 
+  <script>
+    function addToCart(productId, productName, price) {
+      var formData = new FormData();
+      formData.append('product_id', productId);
+      formData.append('product_name', productName);
+      formData.append('price', price);
+
+      fetch('add_to_cart.php', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+          alert(data); // Show response from server
+          // You can redirect to a different page or show some success message here if needed
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
+  </script>
 </body>
 
 </html>
