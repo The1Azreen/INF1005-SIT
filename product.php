@@ -97,8 +97,8 @@ function getProducts()
                 echo '</a>';
                 echo '</div>';
                 echo '<div class="product-info" style="text-align: center;">';
-                echo '<h2 class="product-title">' . $products['name'] . '</h2>';
-                echo '<p class="product-price">' . $products['price'] . '</p>';
+                echo '<h2 class="product-title">' . $product['name'] . '</h2>';
+                echo '<p class="product-price">' . $product['price'] . '</p>';
                 /* echo '<p class="product-description">' . $product['description'] . '</p>'; */
 
                 echo '<button class="btn btn-primary" style="text-align: center;" onclick="addToCart(' . $product['product_id'] . ', \'' . $product['name'] . '\', ' . $product['price'] . ')">Add to Cart</button>';

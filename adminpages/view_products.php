@@ -37,8 +37,8 @@ if ($con->connect_error) {
                 $product_title = $row['product_name'];
                 $product_image = $row['filePath'];
                 $product_price = $row['price'];
-                $quantity = $row['qty'];
-                $product_description = $row['description'];
+                $quantity = $row['quantity'];
+                $product_description = $row['product_description'];
                 // Construct the complete image URL with the product_id parameter
                 $image_url = 'http://35.209.60.37/' . $product_image . '?product_id=' . $product_id;
                 ?>
