@@ -1,11 +1,4 @@
 <?php
-
-?>
-<?php
-
-?>
-
-<?php
 session_start(); // Start the session
 $productId = isset($_GET['product_id']) ? $_GET['product_id'] : null; // Get the product id from the URL
 if ($productId !== null) {
@@ -132,7 +125,7 @@ function getProduct($productId)
         .then(response => response.text())
         .then(data => {
           alert(data); // Show response from server
-          // You can redirect to a different page or show some success message here if needed
+          location.reload(); // Reload the page to show updated cart
         })
         .catch(error => {
           console.error('Error:', error);
