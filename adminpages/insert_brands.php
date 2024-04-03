@@ -40,26 +40,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $conn->close();
 ?>
 
-<!-- HTML Form -->
-<div class="container">
-    <h3 class="text-center text-success">Insert Brand</h3>
-    <form action="" method="post" class="mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="input-group mb-3">
-                    <span class="input-group-text bg-info" id="basic-addon1">
-                        <i class="fa-solid fa-receipt"></i>
-                    </span>
-                    <input type="text" class="form-control" name="cat_title" placeholder="Insert Brand" aria-label="Brand" aria-describedby="basic-addon1">
+<aside>
+    <!-- HTML Form -->
+    <div class="container">
+        <h3 class="text-center text-success">Insert Brand</h3>
+        <form action="" method="post" class="mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-info" id="basic-addon1">
+                            <i class="fa-solid fa-receipt"></i>
+                        </span>
+                        <input type="text" class="form-control" name="cat_title" placeholder="Insert Brand"
+                            aria-label="Brand" aria-describedby="basic-addon1">
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="input-group">
-                    <button type="submit" class="btn btn-info btn-block">Insert Brand</button>
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <button type="submit" class="btn btn-info btn-block">Insert Brand</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
-</div>
+        </form>
+    </div>
+    <br>
+</aside>

@@ -1,6 +1,6 @@
 <?php
 // Include database configuration
-include "adminpages/inc/header.inc.php";
+
 $config = parse_ini_file('/var/www/private/db-config.ini');
 if (!$config) {
     die("Failed to read database config file.");
@@ -17,7 +17,7 @@ if ($conn->connect_error) {
 <html lang="en">
 <head>
     <title>All Users</title>
-    <!-- Include necessary CSS/JS libraries -->
+   
     <?php include "adminpages/inc/head.inc.php"; ?>
 </head>
 <body>
@@ -56,31 +56,27 @@ if ($conn->connect_error) {
                                 <td>{$lname}</td>
                                 <td>{$email}</td>
                                 <td>";
-                        echo "<form method='post' action='update_acctype.php'>";
-                        echo "<input type='hidden' name='member_id' value='{$member_id}'>";
-                        echo "<select class='form-control' name='acc_type' onchange='this.form.submit()'>";
-                        echo "<option value='true'" . ($acc_type === 'true' ? ' selected' : '') . ">True</option>";
-                        echo "<option value='false'" . ($acc_type === 'false' ? ' selected' : '') . ">False</option>";
-                        echo "</select>";
-                        echo "</form>";
-                        echo "</td>
-                              <td>";
-                         if ($member_id > 1) {
-                            echo "<button type='button' class='btn btn-danger' data-toggle='modal' data-target='#deleteModal{$member_id}'>
+                    echo "<form method='post' action='update_acctype.php'>";
+                    echo "<input type='hidden' name='member_id' value='{$member_id}'>";
+                    echo "<select class='form-control' name='acc_type' onchange='this.form.submit()'>";
+                    echo "<option value='true'" . ($acc_type === 'true' ? ' selected' : '') . ">True</option>";
+                    echo "<option value='false'" . ($acc_type === 'false' ? ' selected' : '') . ">False</option>";
+                    echo "</select>";
+                    echo "</form>";
+                    echo "</td>
+                    <td>";
+                    if ($member_id > 1) {
+                        echo "<button type='button' class='btn btn-danger' data-toggle='modal' data-target='#deleteModal{$member_id}'>
                                     <i class='fa-solid fa-trash'></i> Delete
-                                  </button>";
-                            
-                        }
-                        echo "</td>
-                              </tr>";
-                    }
-                }
-                $conn->close();
-                ?>
-            </tbody>
-        </table>
-    </main>
+                            </button>";
 
-    <?php include "adminpages/inc/footer.inc.php"; ?>
-</body>
-</html>
+                    }
+                    echo "</td>
+                    </tr>";
+                }
+            }
+            $conn->close();
+            ?>
+        </tbody>
+    </table>
+</aside>
