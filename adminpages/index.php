@@ -1,3 +1,14 @@
+<?php
+// Start the session to access session variables
+session_start();
+
+// Check if the 'type' session variable is set to "true"
+if (!isset($_SESSION['type']) || strcmp($_SESSION['type'], "true") !== 0) {
+    // If not admin, redirect to main index or login page
+    header('Location: /index.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +20,7 @@
 </head>
 
 <body>
+    
     <main class="container">
         <!-- Header -->
         <div class="bg-light py-3 mb-3">
