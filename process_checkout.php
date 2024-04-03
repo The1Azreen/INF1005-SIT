@@ -2,7 +2,7 @@
 session_start(); // Start the session
 
 
-global $errorMsg, $success, $insert;
+global $errorMsg, $success;
 $success = true;
 
 // Check if payment type is selected
@@ -21,51 +21,66 @@ if (!isset ($_SESSION['address'])) {
  */
 function saveOrder()
 {
+    global $errorMsg, $success;
+    $success = true;
+
     $config = parse_ini_file('/var/www/private/db-config.ini');
     if (!$config) {
         $errorMsg = "Failed to read database config file.";
         $success = false;
+        return false;
     }
+
     $conn = new mysqli(
         $config['servername'],
         $config['username'],
         $config['password'],
         $config['dbname']
     );
+    
     // Check connection
     if ($conn->connect_error) {
         $errorMsg = "Connection failed: " . $conn->connect_error;
         $success = false;
-    } else {
-        $status = "pending";
-        // Prepare the statement:
-        $stmt = $conn->prepare("INSERT INTO orders (member_id, total_qty, total_price, payment_id, order_status, delivery_address) 
-                            VALUES (?, ?, ?, ?, ?, ?)");
-        // Bind & execute the query statement:
-        $stmt->bind_param("ssssss", $_SESSION['memberid'], $_SESSION['totalQty'], $_SESSION['totalPrice'], $_POST['payment'], $status, $_SESSION['address']);
-        $stmt->execute();
-        if ($stmt->affected_rows > 0) {
-            $success = true;
-            // Insertion successful
-            $order_id = $conn->insert_id;
-            // Rest of your code for retrieving inserted data
-            foreach ($_SESSION['cart'] as $key => $item) {
-                $product_id = $item['product_id'];
-                $qty = $item['quantity'];
-                $stmt = $conn->prepare("INSERT INTO order_products (product_id, order_id, qty) VALUES (?, ?, ?)");
-                $stmt->bind_param("iii",$product_id, $order_id,  $qty);
-                $stmt->execute();
-            }
-        } else {
-            $errorMsg = "Error with checkout, please try again later.";
-            $success = false;
-        }
-        $stmt->close();
+        return false;
     }
-    $conn->close();
-    return $success;
-}
 
+    // Start transaction
+    $conn->begin_transaction();
+
+    $status = "pending";
+    $stmt = $conn->prepare("INSERT INTO orders (total_qty, total_price, order_status, delivery_address, member_id, payment_id) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssss", $_SESSION['totalQty'], $_SESSION['totalPrice'], $status,  $_SESSION['address'], $_SESSION['memberid'], $_POST['payment']);
+    $stmt->execute();
+
+    if ($stmt->affected_rows > 0) {
+        $order_id = $conn->insert_id;
+        foreach ($_SESSION['cart'] as $key => $item) {
+            $product_id = $item['product_id'];
+            $qty = $item['quantity'];
+            // Update product quantity in database
+            $updateStmt = $conn->prepare("UPDATE products SET quantity = quantity - ? WHERE product_id = ?");
+            $updateStmt->bind_param("ii", $qty, $product_id);
+            $updateStmt->execute();
+            // Insert into order_products table
+            $orderProductStmt = $conn->prepare("INSERT INTO order_products (product_id, order_id, qty) VALUES (?, ?, ?)");
+            $orderProductStmt->bind_param("iii", $product_id, $order_id,  $qty);
+            $orderProductStmt->execute();
+        }
+        $conn->commit();
+    } else {
+        $errorMsg = "Error with checkout, please try again later.";
+        $success = false;
+        $conn->rollback();
+        return false;
+    }
+
+    $stmt->close();
+    $updateStmt->close();
+    $orderProductStmt->close();
+    $conn->close();
+    return true;
+}
 ?>
 
 <!DOCTYPE html>

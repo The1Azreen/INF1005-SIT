@@ -63,7 +63,7 @@ getMemberAddress();
 
 <body>
     <?php
-    include "inc/loginNav.inc.php";
+    include "inc/nav.inc.php";
     ?>
     <main class="container">
         <div class="row">
@@ -133,8 +133,6 @@ getMemberAddress();
                     <?php } ?>
                 </form>
             </div>
-
-
             <div class="shipping-address-container col-md-3">
                 <h2>Shipping Address</h2>
                 <form action="process_address.php" method="POST">

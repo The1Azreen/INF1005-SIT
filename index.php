@@ -4,20 +4,18 @@ session_start(); // Start the session
 <!DOCTYPE html>
 <html lang="en">
 
-
 <head>
     <?php
     include "inc/head.inc.php";
     ?>
 </head>
 
-
 <body>
-    <?php // Check if user is login or not
-        include "inc/nav.inc.php";
+    <?php // Check if user is logged in or not
+    include "inc/nav.inc.php";
     ?>
     <main class="container">
-        <!--BIG CAROUSELL-->
+        <!-- BIG CAROUSEL -->
         <section>
             <div id="carouselBig" class="carousel slide carousel-fade" data-ride="carousel">
                 <ol class="carousel-indicators">
@@ -27,11 +25,11 @@ session_start(); // Start the session
                 </ol>
                 <div class="carousel-inner">
 
-                    <!--EACH CAROUSELL CARD-->
+                    <!-- EACH CAROUSEL ITEM -->
                     <div class="carousel-item active">
                         <img class="d-block w-100" src="images/Banners/hugo-agut-tugal-6cdIdu8KkLg-unsplash.jpg" alt="First slide">
                         <div class="carousel-caption d-none d-md-block text-center">
-                            <h5>BUY NOW</h>
+                            <h5>BUY NOW</h5>
                         </div>
                     </div>
 
@@ -43,7 +41,7 @@ session_start(); // Start the session
                     </div>
                 </div>
 
-                <!--ARROWS-->
+                <!-- CAROUSEL ARROWS -->
                 <a class="carousel-control-prev" href="#carouselBig" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
@@ -52,7 +50,7 @@ session_start(); // Start the session
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
-                <!--ARROWS-->
+                <!-- CAROUSEL ARROWS -->
             </div>
         </section>
         <br>
@@ -64,17 +62,23 @@ session_start(); // Start the session
                     <div id="flashDealsCarousel" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">
                             <?php
-                            $flashDeals = [
-                                ["images/flash_deals/black_digital_camera.jpeg?product_id=1001", "Black Digital Camera"],
-                                ["images/flash_deals/silver_laptop.jpeg?product_id=1002", "Silver Laptop"],
-                                ["images/flash_deals/fitness_tracker.jpeg", "Fitness Tracker"],
-                                ["images/flash_deals/smart_speaker.jpeg", "Smart Speaker"],
-                                ["images/flash_deals/wireless_headset.jpeg", "Wireless Headset"]
-                            ];
+                            // Fetch latest products from the database
+                            $config = parse_ini_file('/var/www/private/db-config.ini');
+                            if (!$config) {
+                                die("Failed to read database config file.");
+                            }
 
+                            $con = new mysqli($config['servername'], $config['username'], $config['password'], $config['dbname']);
+                            if ($con->connect_error) {
+                                die("Connection failed: " . $con->connect_error);
+                            }
 
+                            $stmt = $con->prepare("SELECT * FROM products ORDER BY product_id DESC LIMIT 8"); // Limit query to 8 latest products
+                            $stmt->execute();
+                            $result = $stmt->get_result();
 
-                            $numSlides = ceil(count($flashDeals) / 4); // Calculate the number of slides
+                            $numRows = $result->num_rows;
+                            $numSlides = ceil($numRows / 4);
 
                             for ($i = 0; $i < $numSlides; $i++) {
                                 $activeClass = ($i === 0) ? "active" : "";
@@ -83,36 +87,36 @@ session_start(); // Start the session
                             <?php } ?>
                         </ol>
                         <div class="carousel-inner">
-                            <?php for ($i = 0; $i < $numSlides; $i++) {
-                                $activeClass = ($i === 0) ? "active" : "";
+                            <?php
+                            // Reset result pointer
+                            $result->data_seek(0);
+
+                            // Loop through the slides
+                            for ($i = 0; $i < $numSlides; $i++) {
+                                echo '<div class="carousel-item' . (($i == 0) ? " active" : "") . '">';
+                                echo '<div class="row">';
+
+                                // Loop through the products for each slide
+                                for ($j = 0; $j < 4; $j++) {
+                                    if ($row = $result->fetch_assoc()) {
+                                        $image_url = 'http://35.209.60.37/' . $row['filePath'] . '?product_id=' . $row['product_id'];
+                                    ?>
+                                        <div class="col-sm-3">
+                                            <a href="product_description.php?product_id=<?php echo $row['product_id']; ?>">
+                                                <img src="<?php echo $image_url; ?>" class="img-responsive product-image" style="width:100%" alt="<?php echo $row['product_name']; ?>">
+                                            </a>
+                                        </div>
+                                    <?php
+                                    } else {
+                                        // If there are fewer than 4 products left, break out of the loop
+                                        break;
+                                    }
+                                }
+
+                                echo '</div>';
+                                echo '</div>';
+                            }
                             ?>
-                                <div class="carousel-item <?php echo $activeClass; ?>">
-                                    <div class="row">
-                                        <!-- <?php for ($j = $i * 4; $j < min(($i + 1) * 4, count($flashDeals)); $j++) {
-                                                    $deal = $flashDeals[$j];
-                                                ?>
-                                            <div class="col-sm-3">
-                                                <a href="product_description.php?">
-                                                    <img src="<?php echo $deal[0]; ?>" class="img-responsive product-image" style="width:70%" alt="<?php echo $deal[1]; ?>">
-                                                </a>
-                                            </div>
-                                        <?php } ?> -->
-                                        <?php for ($j = $i * 4; $j < min(($i + 1) * 4, count($flashDeals)); $j++) {
-                                            $deal = $flashDeals[$j];
-                                            $url = $deal[0];
-                                            $query = parse_url($url, PHP_URL_QUERY);
-                                            parse_str($query, $params);
-                                            $productId = $params['product_id'];
-                                        ?>
-                                            <div class="col-sm-3">
-                                                <a href="product_description.php?product_id=<?php echo $productId; ?>">
-                                                    <img src="<?php echo $deal[0]; ?>" class="img-responsive product-image" style="width:70%" alt="<?php echo $deal[1]; ?>">
-                                                </a>
-                                            </div>
-                                        <?php } ?>
-                                    </div>
-                                </div>
-                            <?php } ?>
                         </div>
                         <div class="carousel-control">
                             <a class="carousel-control-prev" href="#flashDealsCarousel" role="button" data-slide="prev" style="width: 5%;">
@@ -124,15 +128,11 @@ session_start(); // Start the session
                                 <span class="sr-only">Next</span>
                             </a>
                         </div>
-
                     </div>
                 </div>
             </div>
         </section>
-
-
     </main>
-
     <br>
 
     <?php
