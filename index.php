@@ -11,11 +11,11 @@ session_start(); // Start the session
 </head>
 
 <body>
-    <?php // Check if user is login or not
+    <?php // Check if user is logged in or not
     include "inc/nav.inc.php";
     ?>
     <main class="container">
-        <!--BIG CAROUSELL-->
+        <!-- BIG CAROUSEL -->
         <section>
             <div id="carouselBig" class="carousel slide carousel-fade" data-ride="carousel">
                 <ol class="carousel-indicators">
@@ -25,7 +25,7 @@ session_start(); // Start the session
                 </ol>
                 <div class="carousel-inner">
 
-                    <!--EACH CAROUSELL CARD-->
+                    <!-- EACH CAROUSEL ITEM -->
                     <div class="carousel-item active">
                         <img class="d-block w-100" src="images/Banners/hugo-agut-tugal-6cdIdu8KkLg-unsplash.jpg" alt="First slide">
                         <div class="carousel-caption d-none d-md-block text-center">
@@ -41,7 +41,7 @@ session_start(); // Start the session
                     </div>
                 </div>
 
-                <!--ARROWS-->
+                <!-- CAROUSEL ARROWS -->
                 <a class="carousel-control-prev" href="#carouselBig" role="button" data-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="sr-only">Previous</span>
@@ -50,7 +50,7 @@ session_start(); // Start the session
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
-                <!--ARROWS-->
+                <!-- CAROUSEL ARROWS -->
             </div>
         </section>
         <br>
@@ -73,11 +73,12 @@ session_start(); // Start the session
                                 die("Connection failed: " . $con->connect_error);
                             }
 
-                            $stmt = $con->prepare("SELECT * FROM products ORDER BY product_id DESC LIMIT 5"); // Assuming you want to display the latest 5 products
+                            $stmt = $con->prepare("SELECT * FROM products ORDER BY product_id DESC LIMIT 8"); // Limit query to 8 latest products
                             $stmt->execute();
                             $result = $stmt->get_result();
 
-                            $numSlides = ceil($result->num_rows / 4);
+                            $numRows = $result->num_rows;
+                            $numSlides = ceil($numRows / 4);
 
                             for ($i = 0; $i < $numSlides; $i++) {
                                 $activeClass = ($i === 0) ? "active" : "";
@@ -87,25 +88,33 @@ session_start(); // Start the session
                         </ol>
                         <div class="carousel-inner">
                             <?php
-                            $counter = 0;
-                            while ($row = $result->fetch_assoc()) {
-                                if ($counter % 4 == 0) {
-                                    echo '<div class="carousel-item' . (($counter == 0) ? " active" : "") . '">';
-                                    echo '<div class="row">';
+                            // Reset result pointer
+                            $result->data_seek(0);
+
+                            // Loop through the slides
+                            for ($i = 0; $i < $numSlides; $i++) {
+                                echo '<div class="carousel-item' . (($i == 0) ? " active" : "") . '">';
+                                echo '<div class="row">';
+
+                                // Loop through the products for each slide
+                                for ($j = 0; $j < 4; $j++) {
+                                    if ($row = $result->fetch_assoc()) {
+                                        $image_url = 'http://35.209.60.37/' . $row['filePath'] . '?product_id=' . $row['product_id'];
+                                    ?>
+                                        <div class="col-sm-3">
+                                            <a href="product_description.php?product_id=<?php echo $row['product_id']; ?>">
+                                                <img src="<?php echo $image_url; ?>" class="img-responsive product-image" style="width:100%" alt="<?php echo $row['product_name']; ?>">
+                                            </a>
+                                        </div>
+                                    <?php
+                                    } else {
+                                        // If there are fewer than 4 products left, break out of the loop
+                                        break;
+                                    }
                                 }
-                                $image_url = 'http://35.209.60.37/' . $row['filePath'] . '?product_id=' . $row['product_id'];
-                            ?>
-                                <div class="col-sm-3">
-                                    <a href="product_description.php?product_id=<?php echo $row['product_id']; ?>">
-                                        <img src="<?php echo $image_url; ?>" class="img-responsive product-image" style="width:70%" alt="<?php echo $row['product_name']; ?>">
-                                    </a>
-                                </div>
-                            <?php
-                                $counter++;
-                                if ($counter % 4 == 0 || $counter == $result->num_rows) {
-                                    echo '</div>';
-                                    echo '</div>';
-                                }
+
+                                echo '</div>';
+                                echo '</div>';
                             }
                             ?>
                         </div>
