@@ -37,7 +37,7 @@ if ($conn->connect_error) {
                 <th>Last Name</th>
                 <th>Email</th>
                 <th>Account Type</th>
-                <th>Delete</th>
+                <!-- <th>Delete</th> -->
             </tr>
         </thead>
         <tbody class='bg-secondary text-light'>
@@ -73,13 +73,11 @@ if ($conn->connect_error) {
                         // Simply display acc_type for member_id = 1
                         echo $acc_type;
                     }
-                    echo "</td>
-                          <td>";
+                    
                     if ($member_id > 1) { // Only show delete button for members except member_id = 1
-                        echo "<button class='btn btn-danger delete-button' data-member-id='{$member_id}'>Delete</button>";
+                       // echo "<button class='btn btn-danger delete-button' data-member-id='{$member_id}'>Delete</button>";
                     }
-                    echo "</td>
-                          </tr>";
+                    
                 }
             }
             $stmt->close();
