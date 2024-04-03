@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $product_price = $_POST['product_price'];
 
     // File upload
-    $target_dir = "..images/ProductImages/";
+    $target_dir = "../images/ProductImages/"; 
     $target_file = $target_dir . basename($_FILES["product_image1"]["name"]);
     move_uploaded_file($_FILES["product_image1"]["tmp_name"], $target_file);
 
