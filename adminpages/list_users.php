@@ -23,8 +23,8 @@ if ($conn->connect_error) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Include your head contents here -->
     <title>All Users</title>
+    <!-- Include your head contents here -->
 </head>
 <body>
 <aside>
@@ -37,7 +37,7 @@ if ($conn->connect_error) {
                 <th>Last Name</th>
                 <th>Email</th>
                 <th>Account Type</th>
-                <th>Delete</th>
+               
             </tr>
         </thead>
         <tbody class='bg-secondary text-light'>
@@ -60,58 +60,36 @@ if ($conn->connect_error) {
                             <td>{$fname}</td>
                             <td>{$lname}</td>
                             <td>{$email}</td>
-                            <td>{$acc_type}</td>
                             <td>";
-                    // Only show the delete button for members that can be deleted
-                    if ($member_id > 1) {
-                        echo "<button type='button' class='btn btn-danger delete-btn' data-member-id='{$member_id}' data-toggle='modal' data-target='#deleteMemberModal'>
-                                <i class='fa-solid fa-trash'></i> Delete
-                              </button>";
+                    if ($member_id > 1) { // Dropdown for members except member_id = 1
+                        echo "<form method='post' action='update_acctype.php'>";
+                        echo "<input type='hidden' name='member_id' value='{$member_id}'>";
+                        echo "<select class='form-control' name='acc_type' onchange='this.form.submit()'>";
+                        echo "<option value='true'" . ($acc_type === 'true' ? ' selected' : '') . ">True</option>";
+                        echo "<option value='false'" . ($acc_type === 'false' ? ' selected' : '') . ">False</option>";
+                        echo "</select>";
+                        echo "</form>";
+                    } else {
+                        // Simply display acc_type for member_id = 1
+                        echo $acc_type;
                     }
+                    echo "</td>
+                          <td>";
+                    // Delete button logic (if applicable) would go here
                     echo "</td>
                           </tr>";
                 }
             }
+            $stmt->close();
             ?>
         </tbody>
     </table>
 </aside>
 
-<!-- Delete Member Modal -->
-<div class="modal fade" id="deleteMemberModal" tabindex="-1" aria-labelledby="deleteMemberModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteMemberModalLabel">Confirm Member Deletion</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Are you sure you want to delete this member?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-danger" id="confirmDelete">Delete</button>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- Additional content like modals would go here -->
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    var deleteButtons = document.querySelectorAll('.delete-btn');
-    var confirmDeleteButton = document.getElementById('confirmDelete');
-
-    deleteButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            var memberId = this.getAttribute('data-member-id');
-            confirmDeleteButton.onclick = function() {
-                window.location.href = `delete_account.php?member_id=${memberId}`;
-            };
-        });
-    });
-});
+// Include any JavaScript here
 </script>
 
 <?php $conn->close(); ?>
