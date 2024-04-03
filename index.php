@@ -35,7 +35,6 @@ session_start(); // Start the session
                     <div class="carousel-item active">
                         <img class="d-block w-100" src="images/Banners/hugo-agut-tugal-6cdIdu8KkLg-unsplash.jpg" alt="First slide">
                         <div class="carousel-caption d-none d-md-block text-center">
-                            <h5>BUY NOW</h>
                         </div>
                     </div>
 
@@ -91,15 +90,6 @@ session_start(); // Start the session
                             ?>
                                 <div class="carousel-item <?php echo $activeClass; ?>">
                                     <div class="row">
-                                        <!-- <?php for ($j = $i * 4; $j < min(($i + 1) * 4, count($flashDeals)); $j++) {
-                                                    $deal = $flashDeals[$j];
-                                                ?>
-                                            <div class="col-sm-3">
-                                                <a href="product_description.php?">
-                                                    <img src="<?php echo $deal[0]; ?>" class="img-responsive product-image" style="width:70%" alt="<?php echo $deal[1]; ?>">
-                                                </a>
-                                            </div>
-                                        <?php } ?> -->
                                         <?php for ($j = $i * 4; $j < min(($i + 1) * 4, count($flashDeals)); $j++) {
                                             $deal = $flashDeals[$j];
                                             $url = $deal[0];
