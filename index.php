@@ -29,7 +29,7 @@ session_start(); // Start the session
                     <div class="carousel-item active">
                         <img class="d-block w-100" src="images/Banners/hugo-agut-tugal-6cdIdu8KkLg-unsplash.jpg" alt="First slide">
                         <div class="carousel-caption d-none d-md-block text-center">
-                            <h5>BUY NOW</h5>
+        
                         </div>
                     </div>
 
