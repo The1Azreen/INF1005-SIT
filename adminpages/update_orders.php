@@ -1,4 +1,6 @@
 <?php
+
+session_start();
 // Check if the 'type' session variable is set to "true"
 if (!isset($_SESSION['type']) || strcmp($_SESSION['type'], "true") !== 0) {
     // If not admin, redirect to main index or login page

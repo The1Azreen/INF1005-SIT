@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Include database configuration
 // Check if the 'type' session variable is set to "true"
 if (!isset($_SESSION['type']) || strcmp($_SESSION['type'], "true") !== 0) {
@@ -54,7 +55,7 @@ if ($con->connect_error) {
                     <td> 
                     <form action='update_orders.php' method='post' onchange='this.submit()'>
                     <input type='hidden' name='order_id' value='$order_id'>
-                    <select class='form-control' name='order_status'>
+                    <select aria-label='status_select' class='form-control' name='order_status'>
                         <option value='Pending' " . ($order_status == 'Pending' ? 'selected' : '') . ">Pending</option>
                         <option value='Packed' " . ($order_status == 'Packed' ? 'selected' : '') . ">Packed</option>
                         <option value='Shipped' " . ($order_status == 'Shipped' ? 'selected' : '') . ">Shipped</option>

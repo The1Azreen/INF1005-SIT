@@ -1,5 +1,14 @@
 <?php
+
+// Start the session to access session variables
+session_start();
+
 // Check if the 'type' session variable is set to "true"
+if (!isset($_SESSION['type']) || strcmp($_SESSION['type'], "true") !== 0) {
+    // If not admin, redirect to main index or login page
+    header('Location: /index.php');
+    exit();
+}
 
 // Include database configuration
 $config = parse_ini_file('/var/www/private/db-config.ini');
