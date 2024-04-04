@@ -15,7 +15,7 @@ function sanitize_input($data)
  */
 function authenticateUser()
 {
-    global $memberid, $fname, $lname, $email,$uType, $pwd_hashed, $errorMsg, $success;
+    global $memberid, $fname, $lname, $email, $uType, $pwd_hashed, $errorMsg, $success;
     $success = true;
     // Create database connection.
     $config = parse_ini_file('/var/www/private/db-config.ini');
@@ -89,7 +89,7 @@ function authenticateUser()
             $pwd = $passerrorMsg = "";
             $mailsuccess = true;
             $passsuccess = true;
-            if (empty ($_POST["email"])) {
+            if (empty($_POST["email"])) {
                 $mailerrorMsg .= "Email is required.<br>";
                 $mailsuccess = false;
             } else {
@@ -100,7 +100,7 @@ function authenticateUser()
                     $mailsuccess = false;
                 }
             }
-            if (empty ($_POST["pwd"])) {
+            if (empty($_POST["pwd"])) {
                 $passerrorMsg = "Passwords is required.<br>";
                 $passsuccess = false;
             }
@@ -119,25 +119,16 @@ function authenticateUser()
                     <h4>Welcome back,
                         <?php echo $fname . " " . $lname; ?>
                     </h4>
-<<<<<<< HEAD
-                    <?php if ($uType == 'user'){ ?>
-=======
-                    <?php if ($uType == 'false'){ ?>
->>>>>>> Yolanda-Branch
-                        <input onclick="window.location='index.php'" class="btn btn-success" type="submit"
+                    <input onclick="window.location='index.php'" class="btn btn-success" type="submit"
                         value="Return to Home">
-                    <?php } else {?>
-                        <!-- display admin main page instead, change # with admin php -->
-                        <input onclick="window.location='#'" class="btn btn-success" type="submit"
-                            value="Return to Home">
-                    <?php } ?>
                 </div>
-                    <?php 
-                        $_SESSION['user'] = $fname;
-                        $_SESSION['memberid'] = $memberid;
-                    ?>
                 <?php
-                } else {
+                $_SESSION['user'] = $fname;
+                $_SESSION['memberid'] = $memberid;
+                $_SESSION['type'] = $uType;
+                ?>
+                <?php
+            } else {
                 ?>
                 <div
                     style="padding: 20px; border-top: 2px solid #D3D3D3; margin-top: 10px; border-bottom: 2px solid #D3D3D3; margin-bottom: 10px;">

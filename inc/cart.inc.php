@@ -1,4 +1,3 @@
-
 <aside id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <div class="row">
@@ -6,7 +5,10 @@
 
             <h2>Cart</h2>
 
-            <?php if (!$cart_empty) { ?>
+            <?php
+            // Start session
+            session_start();
+            if (!$cart_empty) { ?>
                 <table class="cart_item">
                     <thead>
                         <tr>
@@ -29,9 +31,9 @@
                                     <?php echo $item['price']; ?>
                                 </td>
                                 <td style="text-align: center;">
-                                    <button class="btnRemove"
-                                        onclick="removeFromCart('<?php echo $item['product_name']; ?>')"><i
-                                            class="bi bi-dash-circle"></i></button>
+                                    <button class="btnRemove" onclick="removeFromCart('<?php echo $item['product_name']; ?>')">
+                                        <i class="bi bi-dash-circle"></i>
+                                    </button>
                                 </td>
                             </tr>
                             <?php
@@ -46,11 +48,16 @@
                 <!-- Display total price -->
                 <br>
                 <p>Total:
-                    <?php echo '$' . number_format($totalPrice, 2);
-                    ?>
+                    <?php echo '$' . number_format($totalPrice, 2); ?>
                 </p>
                 <br>
-                <div><a href="checkout.php" class="btn btn-primary btn-block">Checkout</a></div>
+                <?php if (isset($_SESSION['memberid'])) { ?>
+                    <div><a href="checkout.php" class="btn btn-primary btn-block">Checkout</a></div>
+                <?php } else { ?>
+                    <p>Please log in to proceed to checkout.</p>
+
+                    <div><a href="login.php" class="btn btn-primary btn-block">Log In</a></div>
+                <?php } ?>
             <?php } else { ?>
                 <p>Your cart is empty.</p>
             <?php } ?>

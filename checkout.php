@@ -2,6 +2,7 @@
 session_start(); // Start the session
 
 $_SESSION["current_page"] = "checkout.php";
+
 /*
  * Helper function to get member address
  */
@@ -50,7 +51,6 @@ function getMemberAddress()
 getMemberAddress();
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -63,13 +63,13 @@ getMemberAddress();
 
 <body>
     <?php
-    include "inc/loginNav.inc.php";
+    include "inc/nav.inc.php";
     ?>
     <main class="container">
         <div class="row">
             <div class="col-md-9">
                 <h2><u>Cart</u></h2>
-                <form action="process_checkout.php" method="POST">
+                <form action="process_checkout.php" method="POST" onsubmit="return validateForm();">
                     <?php if (!$cart_empty) { ?>
                         <table class="checkout_cart">
                             <thead>
@@ -88,7 +88,6 @@ getMemberAddress();
                                         <td>
                                             <?php echo $item['quantity'];
                                             ?>
-
                                         </td>
                                         <td>
                                             $
@@ -110,7 +109,24 @@ getMemberAddress();
                         <input type="radio" id="payment1" name="payment" value="1">
                         <label for="payment1">Credit Card</label><br>
                         <input type="radio" id="payment2" name="payment" value="2">
-                        <label for="payment2">Paynow/PayLah</label><br><br>
+                        <label for="payment2">Cash on delivery</label><br><br>
+                        <!-- Credit Card Details -->
+                        <div id="creditCardDetails" style="display: none;">
+                            <div class="form-group">
+                                <label for="cardNumber">Card Number:</label>
+                                <input type="text" class="form-control" id="cardNumber" name="cardNumber"
+                                    placeholder="Enter your card number">
+                            </div>
+                            <div class="form-group">
+                                <label for="expiryDate">Expiry Date:</label>
+                                <input type="text" class="form-control" id="expiryDate" name="expiryDate"
+                                    placeholder="MM/YY">
+                            </div>
+                            <div class="form-group">
+                                <label for="cvv">CVV:</label>
+                                <input type="text" class="form-control" id="cvv" name="cvv" placeholder="Enter CVV">
+                            </div>
+                        </div>
                         <button type="submit" class="btn btn-primary">Checkout</button><br><br>
                     <?php } else { ?>
                         <p>Your cart is empty.</p>
@@ -154,3 +170,69 @@ getMemberAddress();
 </body>
 
 </html>
+
+<script>
+
+    function sanitize_input(data) {
+        // Trim leading/trailing whitespace
+        data = data.trim();
+        // Replace any < or > with their HTML entity equivalents
+        data = data.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        // Replace any " or ' with their HTML entity equivalents
+        data = data.replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        return data;
+    }
+    // Function to toggle credit card details based on payment selection
+    function toggleCreditCardDetails() {
+        var payment1 = document.getElementById("payment1");
+        var creditCardDetails = document.getElementById("creditCardDetails");
+
+        creditCardDetails.style.display = payment1.checked ? "block" : "none";
+    }
+
+    function validateForm() {
+        var payment1 = document.getElementById("payment1");
+        var creditCardDetails = document.getElementById("creditCardDetails");
+        var cardNumber = document.getElementById("cardNumber");
+        var expiryDate = document.getElementById("expiryDate");
+        var cvv = document.getElementById("cvv");
+
+        // If credit card payment is selected and credit card details are visible, validate the fields
+        if (payment1.checked && creditCardDetails.style.display !== "none") {
+            // Check if card number, expiry date, and CVV are filled
+            if (cardNumber.value.trim() === "" || expiryDate.value.trim() === "" || cvv.value.trim() === "") {
+                alert("Please fill in all credit card details.");
+                return false; // Prevent form submission
+            } else {
+                // Sanitize credit card input fields
+                cardNumber.value = sanitize_input(cardNumber.value);
+                expiryDate.value = sanitize_input(expiryDate.value);
+
+                // Check card number and CVV using regex
+                var cardNumberRegex = /^\d{16}$/; // Assumes card number is exactly 16 digits
+                var cvvRegex = /^\d{3}$/; // Assumes CVV is exactly 3 digits
+
+                if (!cardNumberRegex.test(cardNumber.value)) {
+                    alert("Please enter a valid 16-digit card number.");
+                    return false; // Prevent form submission
+                }
+                if (!cvvRegex.test(cvv.value)) {
+                    alert("Please enter a valid 3-digit CVV.");
+                    return false; // Prevent form submission
+                }
+            }
+        }
+
+        // Proceed with form submission
+        return true;
+    }
+
+    // Add event listener to payment radio buttons
+    var paymentRadios = document.getElementsByName("payment");
+    for (var i = 0; i < paymentRadios.length; i++) {
+        paymentRadios[i].addEventListener("change", toggleCreditCardDetails);
+    }
+
+    // Call the function initially to set the display based on default selection
+    toggleCreditCardDetails();
+</script>

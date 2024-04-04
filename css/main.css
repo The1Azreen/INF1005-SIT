@@ -1,22 +1,13 @@
 /* Yolanda's CSS */
 .container>h1,
 .col-md-9>h2,
-<<<<<<< HEAD
-section.aboutUS{
-=======
 section.aboutUS {
->>>>>>> Yolanda-Branch
   margin-top: 20px;
 }
 
 
-<<<<<<< HEAD
-.shipping-address-container{
-  padding:20px;
-=======
 .shipping-address-container {
   padding: 20px;
->>>>>>> Yolanda-Branch
 }
 
 #mySidenav {
@@ -29,17 +20,10 @@ section.aboutUS {
   border-radius: 20px 0px 0px 20px
 }
 
-<<<<<<< HEAD
-div.message-page{
-  padding: 20px; 
-  border-top: 2px solid #D3D3D3; 
-  margin-top: 10px; 
-=======
 div.message-page {
   padding: 20px;
   border-top: 2px solid #D3D3D3;
   margin-top: 10px;
->>>>>>> Yolanda-Branch
   border-bottom: 2px solid #D3D3D3;
   margin-bottom: 10px;
 }
@@ -229,8 +213,7 @@ td {
   height: 100%;
   width: 0;
   position: fixed;
-  z-index: 1000;
-  ;
+  z-index: 9999;
   top: 0;
   right: 0;
   background-color: #fafafa;
@@ -273,33 +256,15 @@ td {
 }
 
 section.contact-form {
-<<<<<<< HEAD
-  max-width: 500px; /* Adjust the max-width as needed */
-  margin: 0 auto; /* Center the form horizontally */
-=======
   max-width: 500px;
   /* Adjust the max-width as needed */
   margin: 0 auto;
   /* Center the form horizontally */
->>>>>>> Yolanda-Branch
 }
 
 section.contact-form label,
 section.contact-form input,
 section.contact-form textarea {
-<<<<<<< HEAD
-  width: 100%; /* Make inputs and textarea full width */
-  box-sizing: border-box; /* Include padding and border in the width */
-  margin-bottom: 10px; /* Add some space between form elements */
-}
-
-section.contact-form textarea {
-  resize: vertical; /* Allow vertical resizing of textarea */
-}
-
-section.contact-form button {
-  width: 100%; /* Make the button full width */
-=======
   width: 100%;
   /* Make inputs and textarea full width */
   box-sizing: border-box;
@@ -316,16 +281,16 @@ section.contact-form textarea {
 section.contact-form button {
   width: 100%;
   /* Make the button full width */
->>>>>>> Yolanda-Branch
 }
 
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> Yolanda-Branch
 /* Jocelyn's CSS */
+main {
+  min-height: 80vh;
+  padding: 2rem 0;
+}
+
 .sectionheader {
   text-decoration: underline;
 }
@@ -339,6 +304,7 @@ section.contact-form button {
   background-color: #fafafa;
   /* Updated color */
   border-bottom: solid;
+  
 }
 
 footer {
@@ -364,4 +330,178 @@ body {
   height: 300px;
   /* Update the height value as per your requirement */
   object-fit: cover;
+.product_img img {
+  max-width: 100%;
+  height: auto;
 }
+
+.product_content {
+  padding: 20px;
+}
+
+.product_titled {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.product_description {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.price {
+  margin-bottom: 20px;
+}
+
+.normal_price {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.genre,
+.release_date {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.btn_submit {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* Reviews Section */
+.review {
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+  border-radius: 5px;
+}
+
+.review h4 {
+  color: #171717;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.review .rating i {
+  color: rgb(207, 182, 40);
+  margin-right: 4px;
+}
+.review p {
+  color: #171717;
+  line-height: 1.5;
+}
+
+/* Comment Section */
+#comments {
+  margin-top: 50px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+}
+
+#rating {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.btn_submit {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+}
+.star-rating {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.star-rating .d-block {
+  display: block;
+  cursor: pointer;
+}
+
+.text-primary .bi {
+  color: #0d6efd; /* Bootstrap primary color */
+}
+
+.text-secondary .bi {
+  color: #6c757d; /* Bootstrap secondary color */
+}
+.star-rating {
+  color: #ccc;
+}
+
+.star-rating i.fas::before {
+  content: "\f005";
+}
+
+.star-rating i.far::before {
+  content: "\f006";
+}
+
+.star-rating i.active,
+.star-rating i:hover {
+  color: #0d6efd;
+  cursor: pointer;
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  width: 36px;
+  height: 36px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-top: -18px;
+  /*   border: 2px solid while; */
+  opacity: 10; /* Add this line to make the icon visible */
+}
+
+/* Enable pointer events on the buttons */
+.carousel-control {
+  pointer-events: auto;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  font-size: 32px;
+  color: white;
+  font-weight: bold;
+  line-height: 1;
+  display: block;
+}
+
+.carousel-control-prev-icon::before,
+.carousel-control-next-icon::before {
+  color: transparent;
+  -webkit-text-stroke: 2px black;
+}
+}
+
