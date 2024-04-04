@@ -57,7 +57,7 @@ if ($con->connect_error) {
                     $product_image = $row['filePath'];
                     $product_price = $row['price'];
                     $quantity = $row['quantity'];
-                    $product_description = $row['description'];
+                    $product_description = $row['product_description'];
                     ?>
                     <tr class='text-center'>
                         <td><?php echo htmlspecialchars($product_id); ?></td>
